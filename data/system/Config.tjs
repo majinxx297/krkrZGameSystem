@@ -58,8 +58,8 @@ function KAGWindow_config()
 // scWidth に画面の幅、scHeight に画面の高さをピクセル単位で指定します。
 // 標準的に使われている 640x480 や 800x600 のような画面サイズではないサイズ
 // に設定すると、フルスクリーンにできない場合があります。
-;scWidth = 800;
-;scHeight = 600;
+;scWidth = 1280;
+;scHeight = 720;
 
 
 // ◆ 読みとり専用モード
@@ -366,35 +366,35 @@ function Menu_visible_config()
 // ◆ 「システム > メッセージを消す」
 // このメニュー項目を非表示にしてもマウスの右クリックでのメッセージの
 // 非表示は引き続き有効です。
-;rightClickMenuItem.visible = false;
+;rightClickMenuItem.visible = true;
 
 
 // ◆ 「システム > メッセージ履歴の表示」
-;showHistoryMenuItem.visible = false;
+;showHistoryMenuItem.visible = true;
 
 
 // ◆ 「システム > 次の選択肢/未読まで進む」または「次の選択肢まで進む」
-;skipToNextStopMenuItem.visible = false;
+;skipToNextStopMenuItem.visible = true;
 
 
 // ◆ 「システム > 自動的に読み進む」
-;autoModeMenuItem.visible = false;
+;autoModeMenuItem.visible = true;
 
 
 // ◆ 「システム > 自動的に読み進むウェイト」
-;autoModeWaitMenu.visible = false;
+;autoModeWaitMenu.visible = true;
 
 
 // ◆ 「システム > 前に戻る」
-;goBackMenuItem.visible = false;
+;goBackMenuItem.visible = true;
 
 
 // ◆ 「システム > 最初に戻る」
-;goToStartMenuItem.visible = false;
+;goToStartMenuItem.visible = true;
 
 
 // ◆ 「文字表示」
-;characterMenu.visible = false;
+;characterMenu.visible = true;
 
 
 // ◆ 「文字表示 > 表示速度 > ページ末まで一気に」
@@ -420,19 +420,19 @@ function Menu_visible_config()
 
 
 // ◆ 「栞をたどる」
-;restoreMenu.visible = false;
+;restoreMenu.visible = true;
 
 
 // ◆ 「栞をはさむ」
-;storeMenu.visible = false;
+;storeMenu.visible = true;
 
 
 // ◆ 「画面」
-;displayMenu.visible = false;
+;displayMenu.visible = true;
 
 
 // ◆ 「ヘルプ」
-;helpMenu.visible = false;
+;helpMenu.visible = true;
 
 
 // ◆ 「ヘルプ > 目次 ...」
@@ -528,7 +528,7 @@ function MessageLayer_config()
 
 // ◆ 文字の大きさ
 // デフォルトの文字の大きさ ( 高さ ) を pixel 単位で指定します。
-;defaultFontSize = 24;  // deffont タグの size 属性に相当
+;defaultFontSize = 18;  // deffont タグの size 属性に相当
 
 
 // ◆ 行間

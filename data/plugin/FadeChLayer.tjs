@@ -1,0 +1,534 @@
+﻿/*------------------------------------------------------------------------------
+/		Copyright (C) サークル煌明	All Rights Reserved.
+/			FadeChLayer
+/ 
+/ メッセージレイヤで文字をフェード表示させるためのレイヤ
+/
+/
+/ 親文字字間拡張機能 (ルビ長が親文字より長い際に親文字の字間を広げる機能)
+/ 　均等割り付け( align="e" )時にのみ処理が行われる
+/ ※ルビ長が親文字より長い際に親文字の字間を広げる機能、における改行について
+/	改行処理の手順は以下の通り
+/	1. MessageLayerで「字間を広げない状態の親文字の長さ」を元に改行処理を行う
+/	2. FadeChLayerでルビ・親文字の処理を行い、親文字の字間を広げる
+/	3. MessageLayerが、字間を広げたかチェックを行い、FadeChLayerを適切な位置に
+/ 		移動する。「ただし改行処理は行われない」
+/ そのため、ルビと親文字の文字数によっては文字が右端(縦書きなら下端)にはみ出て
+/ しまう可能性がある。チェックし、手動で改行処理をすること。
+/----------------------------------------------------------------------------*/
+@if(__FADECHLAYER_DEFINED__==0)
+@set(__FADECHLAYER_DEFINED__=1)
+
+Scripts.execStorage("FadeLayer.tjs");
+class FadeChLayer extends FadeLayer {
+	var __id;
+
+	var ll, ml;			// 親レイヤ
+	var dx, dy;	// これなんだっけ…
+
+	var vertical;
+	var hch;	// 縦書き時の縦中横フラグ
+
+	var floated;		// （改行などで）他のFadeChLayerから影響を受けなくなったか
+//	var comp;			// 裏レイヤ
+
+	var fontsize, fontbold, fontface;
+	var textwidth, textheight;	// 回転時に利用するテキスト横幅・縦幅
+
+	var ruby, rubymode;
+	var rubysize, rubybold, rubyface;
+	var rx, ry, span;	// ルビ上端位置・"e"時の1文字毎のスペース
+
+	var expandX, expandY;	// 追加で広げた量
+
+	var slantx, slanty;	// ゆらぎ
+	var rot=0, rad, cl;		// 回転、回転用レイヤ
+	var r_cw, r_ch;		// (回転)レイヤ縦幅横幅
+	var r_cwh;		// (回転)文字の縦横の長さの差
+	var r_a;		// (回転)拡大した余白
+	var r_tx, r_ty;	// (回転)中心
+	var rotMove, radMove;	// 回転しながら表示
+	var slantMoveX, slantMoveY;			// ゆらぎながら表示
+	var skip = false;
+	var fade = true;
+
+	// ※親文字字間拡張機能
+	// 親文字字間を広げたために、どれだけFadeChLayerをずらすかの量
+	// 文字描画後にMessageLayerがこの値にアクセスして、位置調整を行う
+	var textExpandLength = 0;
+	// 左右（縦書きなら上下）それぞれ何pixelまでルビのはみ出しを許すか
+	var textExpandOverflow = 0;
+
+	function FadeChLayer(window, parent) {
+		super.FadeLayer(...);
+		this.parent = parent;
+		ll = parent;
+		ml = parent.parent;	// メッセージレイヤ
+
+		deffadetime = ml.chfadetime;
+		with(cl = new global.FadeLayer(window, this)) {
+			.setPos(0, 0, width, height);
+			.fillRect(0, 0, width, height, 0x00000000);
+			.face = dfAuto;
+			.type = ltAddAlpha;
+		}
+		resetChLayer();
+	}
+
+	function finalize() {
+		invalidate cl;
+		super.finalize(...);
+	}
+
+/*
+/ @ 設定
+/ すべて文字描画／表示開始にのみ呼ばれる
+*/
+
+	function copyCondition() {
+		this.parent = ll.parent;
+
+		vertical = ml.vertical;
+		font.angle = ll.font.angle;
+		font.bold = ll.font.bold;
+		font.italic = ll.font.italic;
+		font.height = ll.font.height;
+		font.face = ll.font.face;
+		fontbold = font.bold;
+		fontsize = font.height;
+		fontface = font.face;
+
+		rubysize = ml.rubySize;
+		rubybold = ml.rubyBold;
+		rubyface = ml.rubyFace;
+		textExpandOverflow = ml.currentRubyOverflow;
+
+		hitType = ll.hitType;
+		hitThreshold = ll.hitThreshold;
+		type = ll.type;
+
+		deffadetime = ml.chfadetime;
+		skip = ml.processChnInF;
+		fade = ml.ch4Fade;
+	}
+
+	function initChLayer(_dx, _dy, _dw, _dh) {
+	//	this.parent = ll;
+		floated = false;
+
+		dx = _dx + slantx + slantMoveX + ll.left;
+		dy = _dy + slanty + slantMoveY + ll.top;
+
+		setPos(dx, dy, _dw, _dh);
+		r_cw = _dw;
+		r_ch = _dh;
+		visible = true;
+	}
+
+	function resetChLayer() {
+		this.parent = ll;
+		ruby = "";	rubymode = "e";
+		rx = ry = span = 0;
+		opacity = 0;
+		textwidth = textheight = 0;
+		expandX = expandY = 0;
+		name="";
+		hch = false;
+
+		imageWidth = 8;	imageHeight = 8;
+		setSizeToImageSize();
+		visible = false;
+
+		face = dfAuto;
+		fillRect(0, 0, imageWidth, imageHeight, 0);		// 完全透明に
+		face = dfProvince;
+		fillRect(0, 0, imageWidth, imageHeight, 0);		// 領域をクリア
+		face = dfAuto;
+
+		if(rot!="n" || rotMove!="n") cl.fillRect(0, 0, cl.width, cl.height, 0x00000000);
+		cl.width = 8; cl.height = 8;
+
+		slantx = slanty = 0;
+		r_cwh = 0;
+		r_cw = r_ch = r_cwh = r_a = r_tx = r_ty = 0;
+		rad = radMove = 0;
+		rot = rotMove = "n";
+		slantMoveX = slantMoveY = 0;
+
+		textExpandLength = 0;
+
+		skip = false;
+		fade = false;
+	}
+
+	function setRuby(sruby, mode = "e") {
+		this.ruby = sruby;
+		rubymode = mode;
+	}
+
+	function setSlant(x, y) {
+		// 
+		slantx += x; slanty += y;
+		setPos(dx += slantx, dy += slanty);
+	}
+
+	function setSlantMove(x, y) {
+		slantMoveX += x if(x!=0);
+		slantMoveY += y if(y!=0);
+		setPos(dx += x, dy += y);
+	}
+
+	function setRad(r) {
+		// rotは360度で指定
+		// initChLayer が呼ばれる前に呼ばれる
+		// ランダムな回転より優先される
+		rot = r;
+		rad = r*0.01745;			// 0.01745 == 1/180*3.1415
+	}
+
+	function setRadMove(r) {
+		// rotは360度で指定
+		// initChLayer が呼ばれる前に呼ばれる
+		// ランダムな回転より優先される
+		rotMove = r;
+		radMove = r*0.01745;
+	}
+
+	function expandLayer(_x, _y) {
+	// 左右をxずつ、上下をyずつ広げる。drawText()で描画位置調整が行われる
+		var x = (int)Math.abs(_x), y = (int)Math.abs(_y);
+		expandX += x, expandY += y;
+
+		width += x*2; height += y*2;
+		changedChLinePos( -x, -y );
+	}
+
+/*
+/ @ 動作・更新
+*/
+	function onTimerLayerMover(tickCount) {
+		var past = tickCount-starttick;
+		if(past>=0) {
+			if(past/time<1.0) {
+				var per = calcPerAccel(past/time, accel);
+				this.opacity	= startopa + int((goalopa - startopa) * per);
+				this.left		= startl + int((goall - startl) * per);
+				this.top		= startt + int((goalt - startt) * per);
+				if(rotMove!="n")
+					rotateText(0, 0, (radMove + rad - (radMove*per)), false);
+			} else {
+				finishLayerMoving();	// 最終状態に移行
+			}
+		}
+	}
+
+	function show(l, t, opa=255, time, accel, delay=0, func, ise=1) {
+		if(!doing) ml.addMovingCh();
+		if(!fade) this.opacity = 255;
+		super.show(...);
+	}
+
+	function stopLayerMoving() {
+		if(doing) ml.stopMovingCh();
+		super.stopLayerMoving(...);
+	}
+
+	function finishLayerMoving() {
+	// MessageLayerに転写されるとtrueを、しなかったらfalseを返す
+		if(doing && rotMove!="n")
+			rotateText(0, 0, rad, false);
+
+		super.finishLayerMoving();
+		if(floated) return drawCh4Parent();
+		return false;
+	}
+
+	function changedChLinePos(cx, cy) {
+		this.dx += cx, this.dy += cy;
+		startl += cx, startt += cy;
+		goall += cx, goalt += cy;
+		if(!doing) { left+=cx, top+=cy; }
+	}
+
+	function drawCh4Parent() {
+		if(!visible) return false;
+		parent.face = dfAuto;
+		parent.operateRect(left, top, this, 0, 0, width, height);
+		parent.face = dfProvince;
+
+		resetChLayer();
+		ll.parent.putFadeChLayer(this);
+
+		return true;
+	}
+
+	function float() {
+	// MessageLayerに転写されるとtrueを、しなかったらfalseを返す
+		floated = true;
+		if(!doing) return drawCh4Parent();
+		return false;
+	}
+
+	function assign(comp) {
+	// メッセージレイヤがトランジション前にassain()する時に呼ばれる
+	// 対となる FadeChLayer の情報をコピーし、対と同様の動作をさせる
+		this.parent = comp.parent.comp;
+
+		hitType = comp.hitType;
+		hitThreshold = comp.hitThreshold;
+		type = comp.type;
+		name = comp.name;
+
+		startopa	= comp.startopa;	goalopa	= comp.goalopa;
+		startl		= comp.startl;		goall	= comp.goall;
+		startt		= comp.startt;		goalt	= comp.goalt;
+		time		= comp.time;
+		accel		= comp.accel;
+		nowisenabled= comp.nowisenabled;
+		starttick	= comp.starttick;
+		doing		= comp.doing;
+		dx			= comp.dx;			dy		= comp.dy;
+		vertical	= comp.vertical;
+		opacity		= comp.opacity;
+		floated		= comp.floated;
+
+		visible		= comp.visible;
+
+		fontsize	= comp.fontsize;
+		fontbold	= comp.fontbold;
+		fontface	= comp.fontface;
+		textExpandOverflow = comp.textExpandOverflow;
+
+		ruby		= comp.ruby;
+		rubymode	= comp.rubymode;
+		rubysize	= comp.rubysize;
+		rubybold	= comp.rubybold;
+		rubyface	= comp.rubyface;
+		rx			= comp.rx;			ry		= comp.ry;
+		span		= comp.span;
+
+		slantx		= comp.slantx;		slanty	= comp.slanty;
+		slantMoveX	= comp.slantMoveX;	slantMoveY	= comp.slantMoveY;
+		rot			= comp.rot;			rad		= comp.rad;
+		rotMove		= comp.rotMove;		radMove	= comp.radMove;
+
+		setPos(comp.left, comp.top, comp.width, comp.height);
+
+		if(rot!="n" || rotMove!="n") {	// 回転
+			r_cw		= comp.r_cw;		r_ch	= comp.r_ch;
+			r_cwh		= comp.r_cwh;
+			r_a			= comp.r_a;
+			r_tx		= comp.r_tx;		r_ty	= comp.r_ty;
+
+			cl.setPos(0, 0, comp.cl.width, comp.cl.height);
+			cl.operateRect(0, 0, comp.cl, 0, 0, cl.width, cl.height, omAuto, 255);
+			cl.fillRect(cl.width/2-1, cl.height/2-1, 2, 2, 0xffff0000);
+		}
+
+		operateRect(0, 0, comp, 0, 0, comp.width, comp.height, omAuto, 255);
+
+	//	if(doing)
+	// 最低一回発行しておく
+		SharedContinuousHandler_object.entry(this,16,'onTimerLayerMover', true);
+	}
+
+/*
+/ @ 文字描画
+*/
+	function drawText(x, y, text, col, opa=255, aa=true, sl=255, sc=0, sw=0, sofx=0, sofy=0) {
+		if(ruby!="") {	calcRubyPos(x, y, text);	}	// ルビ計算
+		x += expandX; y += expandY;	// 位置補正
+
+		// ※親文字字間拡張機能
+		var rubywidth = 0; // とりあえず：親文字の字間を開ける機能。ルビの長さ
+		var fwidth = font.getTextWidth(text);	// 親文字の幅
+
+		// ルビ
+		if(ruby!="") {
+			font.height=rubysize; font.bold=rubybold; font.face=rubyface;
+			rubywidth = font.getTextWidth(ruby); // ※親文字字間拡張機能
+			rx += expandX; ry += expandY;	// 位置補正
+			if(rubymode=="e" && fwidth > rubywidth) {		// 均等割り付け
+				for(var i=0; i<ruby.length; i++) {
+					super.drawText(rx, ry, ruby[i], col, opa, aa, sl, sc, sw, sofx, sofy);
+					if(vertical) ry += span + font.getTextWidth(ruby[i]);
+					else			  rx += span + font.getTextWidth(ruby[i]);
+				}
+			} else {			// 均等割り付け以外
+				super.drawText(rx, ry, ruby, col, opa, aa, sl, sc, sw, sofx, sofy);
+			}
+			font.face=fontface; font.bold=fontbold; font.height=fontsize;
+		 }
+
+		// 本文
+		if(ruby!="" && rubymode=="e" && rubywidth > fwidth && text.length >=2 ) {
+		// ※親文字字間拡張機能
+			textExpandLength = rubywidth - fwidth - textExpandOverflow*2;
+			var parentspan = (textExpandLength)/(text.length-1);
+			if(parentspan >= 1) {
+				// 最低でも1px以上は親文字間が開いていないと、意味がない
+				if(vertical) { changedChLinePos(0,textExpandLength/2); y -= expandY-ry-textExpandOverflow; }
+				else		 { changedChLinePos(textExpandLength/2,0); x -= expandX-rx-textExpandOverflow; }
+				for(var i=0; i<text.length; i++) {
+					super.drawText(x, y, text[i], col, opa, aa, sl, sc, sw, sofx, sofy);
+					if(vertical)	y += parentspan + font.getTextWidth(text[i]);
+					else			x += parentspan + font.getTextWidth(text[i]);
+				}
+			} else {
+				textExpandLength = 0;
+				super.drawText(x, y, text, col, opa, aa, sl, sc, sw, sofx, sofy);
+			}
+		} else {
+			// 通常描画
+			super.drawText(x, y, text, col, opa, aa, sl, sc, sw, sofx, sofy);
+		}
+
+		name = text;
+
+		if(rot!="n" || rotMove!="n") {	// 回転
+			if(vertical) {
+				textwidth = font.getTextHeight(text); textheight = font.getTextWidth(text);
+			} else {
+				textwidth = font.getTextWidth(text); textheight = font.getTextHeight(text);
+			}
+			r_cw = width, r_ch = height;
+			rotateText(x, y, rad+radMove, true);
+		}
+
+		show(left - slantMoveX, top - slantMoveY, , (skip?0:deffadetime) ) if !doing;
+	}
+
+	function drawGraph(cx, cy, lay, _l, _t, lw, lh) {
+	// putGraph から
+		cx += expandX; cy += expandY;
+		operateRect(cx, cy, lay, _l, _t, lw, lh);
+
+		if(rot!="n" || rotMove!="n") {	// 回転
+			textwidth = lw; textheight = lh;
+			r_cw = width;	r_ch = height;
+			if(vertical) cx += textwidth;
+			else		 textheight -= cy;
+			rotateText(cx, cy, rad+radMove, true);
+		}
+		show(left - slantMoveX, top - slantMoveY, , (skip?0:deffadetime)) if !doing;
+	}
+
+	function drawHCHText(x, y, text, col, opa=255, aa=true, sl=255, sc=0, sw=0, sofx=0, sofy=0) {
+		font.face=fontface; font.bold=fontbold; font.height=fontsize; font.angle = 0;
+
+		if(ruby!="") {
+			var cw = font.getTextWidth(text);
+			var ch = font.getTextHeight(text);
+			// 縦書きなのでアングルは2700
+			font.face=rubyface; font.bold=rubybold; font.height=rubysize; font.angle=2700;
+			var rw = font.getTextWidth(ruby);
+
+		// ルビのセンターライン合わせ用余白
+			if(fontsize > cw) expandLayer( (fontsize-cw)>>1, 0 );
+		// センターライン合わせ分を足すことで、ルビのセンターラインも合わさる
+			rx = cw + ml.rubyOffset + rubysize;
+			if(fontsize > cw) rx += (fontsize-cw)\2;
+			ry = (ch - rw)\2;
+			if( ry < 0 ) expandLayer( 0, ry );
+
+			rx += expandX; ry += expandY;
+			super.drawText(rx, ry, ruby, col, opa, aa, sl, sc, sw, sofx, sofy);
+			font.face=fontface; font.bold=fontbold; font.height=fontsize; font.angle = 0;
+		}
+
+		x += expandX; y += expandY;	// 位置補正
+
+		// drawShadowEdge(this, 0, 0, width, height, 1, 0xFFaa00aa, 0xFF00FFFF);
+		// ※文字とルビの方向的に、親文字字間拡張機能は行われない
+		super.drawText(x, y, text, col, opa, aa, sl, sc, sw, sofx, sofy);
+
+		name = text;
+
+		if(rot!="n" || rotMove!="n") {	// 回転
+			textwidth = font.getTextWidth(text); textheight = font.getTextHeight(text);
+			r_cw = width, r_ch = height;
+			rotateText(x, y, rad+radMove, true);
+		}
+
+		show(left - slantMoveX, top - slantMoveY, , (skip?0:deffadetime) ) if !doing;
+	}
+
+	function rotateText(x, y, trad, set) {
+	// 文字を回転させる
+	// レンダリングフォントでは angle が指定できないためアフィン変換による回転
+		with(cl) {
+			if(set) {	// 初期計算・回転・初期補正
+				var r_c = (r_cw > r_ch) ? r_cw : r_ch;	// レイヤ縦幅横幅の大きい方
+				r_cwh = (r_cw - r_ch)\2;				// 縦横幅の差分の1/2
+
+				.setPos(0, 0, r_c*1.415, r_c*1.415);	// 回転するために√2だけ拡大
+				r_a = (.width-r_c)\2;					// 拡大した余白の大きさ
+
+				// 回転の中心座標決定
+				r_tx = r_a + (r_c-r_cw)\2 + x + (vertical ? -textwidth/2: textwidth/2 );
+				r_ty = r_a + (r_c-r_ch)\2 + y + textheight/2;
+
+				width = .width, height = .height;	// 見切れないよう本体も拡大
+				.fillRect(0, 0, .width, .height, 0x00000000);
+				// 文字をコピー
+				if(r_cwh>0) {	 // 横幅＞縦幅
+					.operateRect(r_a, r_a+r_cwh, this, 0, 0, width, height, omAuto, 255);
+					changedChLinePos( -r_a, -(r_a+r_cwh) );
+				} else {	 // 縦幅＞横幅
+					.operateRect(r_a-r_cwh, r_a, this, 0, 0, width, height, omAuto, 255);
+					changedChLinePos( -(r_a-r_cwh), -r_a );
+				}
+			}
+
+			var s = Math.sin(trad), c = Math.cos(trad);
+			affineCopy(
+				cl, 0, 0, width, height, true, 
+				c, -s, s, c, r_tx-(r_tx*c+r_ty*s), r_ty+(r_tx*s-r_ty*c), 
+				stCubic, true
+			);
+		}
+	}
+
+	function calcRubyPos(x, y, text) {
+	// ルビの位置を計算する
+	// 文字からはみ出るときにはレイヤの大きさが変更される
+		// フォントの大きさを計測
+		font.face=rubyface; font.bold=rubybold; font.height=rubysize;
+		var rw = font.getTextWidth(ruby);
+		font.face=fontface; font.bold=fontbold; font.height=fontsize;
+		var cw = font.getTextWidth(text);
+
+		if(vertical) {
+			ry = (cw - rw)/2;
+			if(rubymode=="e") {		// 均等割り付け
+				if( ry < 0 ) {	expandLayer( 0, ry );
+				} else {		span = ( (cw - rw)/ruby.length );	ry = span/2;	}
+			}else if(rubymode=="c") {		// センター
+				if( ry < 0 ) expandLayer( 0, ry );
+			} else if(rubymode=="r") {	// 下寄せ
+				ry = cw - rw;
+				if( ry < 0 ) expandLayer( 0, ry );
+			} else if(rubymode=="l") {	// 上寄せ
+				if( ry < 0 ) height += (rw-cw);
+				ry = 0;
+			}
+			rx = int(x + ml.rubySize + ml.rubyOffset);
+		} else {
+			rx = (cw - rw)/2;
+			if(rubymode=="e") {		// 均等割り付け
+				if( rx < 0 ) {	expandLayer( rx, 0 );
+				} else {		span = ((cw - rw) / (ruby.length) );	rx = span/2;	}
+			} else if(rubymode=="c") {		// センター
+				if( rx < 0 ) expandLayer( rx, 0 );
+			} else if(rubymode=="r") {	// 右寄せ
+				rx = cw - rw;
+				if( rx < 0 ) expandLayer( rx, 0 );
+			} else if(rubymode=="l") {	// 左寄せ
+				if( rx < 0 ) width += (rw-cw);
+				rx = 0;
+			}
+			ry = int(y - ml.rubySize - ml.rubyOffset);
+		}
+	}
+}
+@endif

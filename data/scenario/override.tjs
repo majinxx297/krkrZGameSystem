@@ -1,0 +1,2 @@
+Plugins.link('windowEx.dll');
+KAGLoadScript("APimage.tjs"); 

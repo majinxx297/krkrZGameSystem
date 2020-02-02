@@ -53,6 +53,10 @@ function useArchiveIfExists(name)
 		Storages.addAutoPath(arcname + ">");
 }
 
+// Customize paths
+Storages.addAutoPath("macro/");
+Storages.addAutoPath("plugin/");
+
 Storages.addAutoPath(System.exePath + "video/"); // exePath 以下の video/
 Storages.addAutoPath("video/"); // video フォルダ
 Storages.addAutoPath("others/"); // その他

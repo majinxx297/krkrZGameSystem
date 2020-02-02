@@ -10,6 +10,8 @@ with(Window) {
 
 Plugins.link("menu.dll");
 Plugins.link("KAGParser.dll");
+Plugins.link("plugin/perspective.dll"); 
+Plugins.link("plugin/addFont.dll"); 
 @endif
 
 // このスクリプトは一番最初に実行されるスクリプトです

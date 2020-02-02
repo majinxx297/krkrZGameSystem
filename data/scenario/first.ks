@@ -1,16 +1,31 @@
-﻿;===============================================================================
-; 最初に読み込まれるシナリオファイル
-;===============================================================================
+﻿[wait time=200]
+*start|スタート
+[call storage="WindowResizable.ks"]
+[call storage="AltEnterFullScreen.ks"]
 
-[wait time=200]
+[loadplugin module=extrans.dll]
+[loadplugin module=extNagano.dll]
+[loadplugin module=csvParser.dll]
+[call storage="macro.ks"]
+[call storage=GraphicFramePlugin.ks]
+[call storage="zoom.ks"]
+;[rclick storage="cl_win.ks" target="*start" enable=true call=true jump=trye]
+[call storage=sysChara.ks]
 
-;===============================================================================
-; この辺りにマクロ定義を記述すると良いでしょう
+; Load koumei plugin
+; Cancle the side effect of MessageLayerADV.tjs that makes message0 invisible
+[iscript]
+Scripts.execStorage("MessageLayerADV.tjs");
+[endscript]
+@position layer=message0 page=fore visible=true top=0 left=0 marginl=0 margint=0
+@position layer=message0 page=back visible=true top=0 left=0 marginl=0 margint=0
 
-
-
-; マクロ定義ここまで
-;===============================================================================
-
-; タイトル画面のサンプルシナリオへ
-[jump storage="title.ks"]
+*menu|
+[cm]
+;[emb exp="global.top.小粉_口0"][l][r]
+[link storage=testBasic.ks target=*start]基本功能测试[endlink][r]
+[link storage=testLight.ks target=*start]闪瞎狗眼测试[endlink][r]
+[link storage=testUI.ks target=*start]系统UI测试[endlink][r]
+[link storage=testChara.ks target=*start]角色测试[endlink][r]
+[link storage=fdSystem.ks target=*start]角色系统[endlink][r]
+[link storage=testCG.ks target=*start]CG测试[endlink][r]
