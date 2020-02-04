@@ -436,11 +436,11 @@ function Menu_visible_config()
 
 
 // ◆ 「ヘルプ > 目次 ...」
-;helpIndexMenuItem.visible = true;
+;helpIndexMenuItem.visible = false;
 
 
 // ◆ 「ヘルプ > このソフトについて ...」
-;helpAboutMenuItem.visible = true;
+;helpAboutMenuItem.visible = false;
 
 
 // ◆ 「デバッグ」
@@ -528,7 +528,7 @@ function MessageLayer_config()
 
 // ◆ 文字の大きさ
 // デフォルトの文字の大きさ ( 高さ ) を pixel 単位で指定します。
-;defaultFontSize = 18;  // deffont タグの size 属性に相当
+;defaultFontSize = 20;  // deffont タグの size 属性に相当
 
 
 // ◆ 行間
@@ -551,7 +551,8 @@ function MessageLayer_config()
 // (あるいはシステム変数ファイルを消してください)
 // カンマで区切って複数のフォントを指定することができます。その場合は、最初
 // の方に書いたフォントが存在すれば、優先されます。
-;userFace = "メイリオ"; // deffont タグの face 属性に相当
+// TODO: figure out why this config item doesn't work
+;userFace = "楷体"; // deffont タグの face 属性に相当
 
 
 // ◆ 文字の色
@@ -561,7 +562,7 @@ function MessageLayer_config()
 
 // ◆ 文字をボールドにするか
 // する場合は true, しない場合は false を指定します。
-;defaultBold = true; // deffont タグの bold 属性に相当
+;defaultBold = false; // deffont タグの bold 属性に相当
 
 
 // ◆ ルビサイズ
@@ -702,7 +703,7 @@ function HistoryLayer_config()
 
 
 // ◆ フォント名
-;fontName = "メイリオ";
+;fontName = "楷体";
 
 
 // ◆ フォントを太字にするか

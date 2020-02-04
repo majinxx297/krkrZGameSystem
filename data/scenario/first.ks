@@ -17,10 +17,12 @@
 [iscript]
 Scripts.execStorage("MessageLayerADV.tjs");
 [endscript]
-@position layer=message0 page=fore visible=true top=0 left=0 marginl=0 margint=0
-@position layer=message0 page=back visible=true top=0 left=0 marginl=0 margint=0
+[position layer=message0 page=fore visible=true top=0 left=0 marginl=0 margint=0]
+[position layer=message0 page=back visible=true top=0 left=0 marginl=0 margint=0]
 
 *menu|
+[deffont face="楷体"]
+[resetfont]
 [cm]
 ;[emb exp="global.top.小粉_口0"][l][r]
 [link storage=testBasic.ks target=*start]基本功能测试[endlink][r]

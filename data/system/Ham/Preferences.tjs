@@ -33,7 +33,8 @@ MBGraphicPref.RegularScreenSize = %[width : 800, height : 600];
 // クイックセーブメニュー表示設定
 
 // ◆ クイックセーブ機能を有効にするかどうか
-MBSystemPref.enableQuickSave = true;
+// TODO: turn on quick save and make the buttons work
+MBSystemPref.enableQuickSave = false;
 
 // ◆ 表示位置指定方法
 // lbMargin: 左下に指定マージンを取って表示
@@ -57,7 +58,7 @@ MBGraphicPref.quicksaveButtonMargin = %[x : 5, y : -20];
 //------------------------------------------------------------------------------
 
 // ◆ メニューボタンを表示するかどうか
-MBSystemPref.cmenuButtonEnabled = true;
+MBSystemPref.cmenuButtonEnabled = false;
 
 // ◆メニューボタンの表示位置指定方法
 // lbMargin: 左下に指定マージンを取って表示
@@ -106,7 +107,7 @@ MBFontStyle.size.label = 14;
 MBFontStyle.face.propotional = "ＭＳ Ｐゴシック";
 
 // ◆ 通常フォント
-MBFontStyle.face.normal = "ＭＳ ゴシック";
+MBFontStyle.face.normal = "楷体";
 
 //------------------------------------------------------------------------------
 // レイヤ重ね順の設定
