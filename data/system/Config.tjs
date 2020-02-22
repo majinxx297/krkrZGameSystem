@@ -41,10 +41,6 @@
 
 //[start-global-additionals]
 
-// ◆ Ham拡張の使用
-// Ham Extention for KAG3を使用しない場合はfalseにしてください。
-;global.useHamExtention = true;
-
 //[end-global-additionals]
 
 
@@ -89,7 +85,7 @@ function KAGWindow_config()
 // true を指定すると、セーブデータの拡張子は .bmp になり、エクスプローラや
 // 「開く」ダイアログボックスの「縮小版」表示でセーブ時点でのサムネイルを
 // 表示することができるようになります。
-;saveThumbnail = true;
+;saveThumbnail = false;
 
 
 // ◆サムネイルの保存サイズ
@@ -97,7 +93,7 @@ function KAGWindow_config()
 // 設定は意味がありません。
 // 横幅はピクセル単位で指定してください。たて幅は scWidth と scHeight の
 // 比と同じ比で自動的に計算されます。
-;thumbnailWidth = 120;
+;thumbnailWidth = 133;
 
 // ◆サムネイルの保存モード
 // サムネイルの保存モードを指定します。saveThumbnail を true に設定しないとこの
@@ -151,7 +147,7 @@ function KAGWindow_config()
 // 特に 毎回マクロ定義を 作品のはじめで行うような用途では、古いマクロの情報
 // が栞の読み込みによって新しいマクロの情報に上書きされてしまうことが開発の
 // 妨げになるため、false を指定した方がよいでしょう。
-;saveMacros = false;
+;saveMacros = true;
 
 
 
@@ -306,7 +302,7 @@ function KAGWindow_config()
 // メニューによる栞の管理を行わない場合 ( ゲーム画面中で全部栞の管理などを
 // 行う場合など ) は、numBookMarks は必要な数に設定し、restoreMenu.visible と
 // storeMenu.visible を false に設定してください。
-;numBookMarks = 60;
+;numBookMarks = 10;
 
 
 // ◆ 栞に日付を併記するか
@@ -444,7 +440,7 @@ function Menu_visible_config()
 
 
 // ◆ 「デバッグ」
-;debugMenu.visible = true;
+;debugMenu.visible = false;
 
 
 // ◆ メニュー 追加の設定
@@ -486,7 +482,7 @@ function MessageLayer_config()
 
 // ◆ メッセージレイヤの色と不透明度
 // frameColor には 0xRRGGBB 形式で ( RR GG BB はそれぞれ 2 桁の 16 進数)
-// メッセージレイヤの色を指定します。frameOpacity には 0 ? 255 の数値で、
+// メッセージレイヤの色を指定します。frameOpacity には 0 〜 255 の数値で、
 // 不透明度を指定します。メッセージ枠用の画像が指定されている場合は無効で
 // す。
 ;frameColor = 0x000000; // position タグの color 属性に相当
@@ -744,7 +740,7 @@ function HistoryLayer_config()
 // ◆ 栞にメッセージ履歴を保存するか
 // true を指定すると栞にメッセージ履歴が保存されるように
 // なりますが、栞のデータサイズが大きくなります。
-;storeState = true;
+;storeState = false;
 
 
 // ◆ メッセージ履歴 追加の設定

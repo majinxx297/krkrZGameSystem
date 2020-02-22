@@ -7,7 +7,6 @@ with(Window) {
     &.innerSunken    = &_dummyProp;
     &.showScrollBars = &_dummyProp;
 }
-
 Plugins.link("menu.dll");
 Plugins.link("KAGParser.dll");
 Plugins.link("plugin/perspective.dll"); 

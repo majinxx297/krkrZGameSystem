@@ -9,7 +9,7 @@
 [call storage="macro.ks"]
 [call storage=GraphicFramePlugin.ks]
 [call storage="zoom.ks"]
-;[rclick storage="cl_win.ks" target="*start" enable=true call=true jump=trye]
+[rclick storage="cl_win.ks" target="*start" enable=true call=true jump=trye]
 [call storage=sysChara.ks]
 
 ; Load koumei plugin
