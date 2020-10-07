@@ -1,33 +1,24 @@
-﻿[wait time=200]
-*start|スタート
-[call storage="WindowResizable.ks"]
-[call storage="AltEnterFullScreen.ks"]
+; test message frame with animation
+*start|
+@call storage="WindowResizable.ks"
+@call storage="zoom.ks"
+@call storage=macro.ks
+@rclick storage="rclick.ks" target="*start" enable=true call=true jump=trye
+@wait time=200
 
-[loadplugin module=extrans.dll]
-[loadplugin module=extNagano.dll]
-[loadplugin module=csvParser.dll]
-[call storage="macro.ks"]
-[call storage=GraphicFramePlugin.ks]
-[call storage="zoom.ks"]
-[rclick storage="cl_win.ks" target="*start" enable=true call=true jump=trye]
-[call storage=sysChara.ks]
+@image storage=BG_客厅 layer=base visible=true 
+@position layer=message0 opacity=0 top=512 left=180 marginl=25 margint=25 marginr=25 marginb=25
+@fgzoom storage=woodframe01_white layer=2 sl=580 st=512 sw=0 sh=160 dl=180 dt=512 dw=800 dh=170 time=400 accel=-5
+@wfgzoom canskip=false
 
-; Load koumei plugin
-; Cancle the side effect of MessageLayerADV.tjs that makes message0 invisible
-[iscript]
-Scripts.execStorage("MessageLayerADV.tjs");
-[endscript]
-[position layer=message0 page=fore visible=true top=0 left=0 marginl=0 margint=0]
-[position layer=message0 page=back visible=true top=0 left=0 marginl=0 margint=0]
+@backlay
+@trans layer=2 time=100 method=crossfade
+@image layer=2 page=back storage=woodframe01 visible=true
+@wt
 
-*menu|
-[deffont face="楷体"]
-[resetfont]
 [cm]
-;[emb exp="global.top.小粉_口0"][l][r]
-[link storage=testBasic.ks target=*start]基本功能测试[endlink][r]
-[link storage=testLight.ks target=*start]闪瞎狗眼测试[endlink][r]
-[link storage=testUI.ks target=*start]系统UI测试[endlink][r]
-[link storage=testChara.ks target=*start]角色测试[endlink][r]
-[link storage=fdSystem.ks target=*start]角色系统[endlink][r]
-[link storage=testCG.ks target=*start]CG测试[endlink][r]
+こんにちは。[l][r]
+ごきげんよろしゅう。[l][r]
+改ページしますよ。[p]
+[cm]
+改ページしました。

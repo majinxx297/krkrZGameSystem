@@ -1,5 +1,5 @@
 *start
-[if exp="kag.fore.messages[0].opacity==255"]
+[if exp="kag.fore.messages[0].opacity>0"]
 
 ; TODO: get layer names arguments from callee
 ; TODO: show message window & frame when right click
