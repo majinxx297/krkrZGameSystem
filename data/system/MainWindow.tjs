@@ -3850,6 +3850,24 @@ class KAGWindow extends Window
 		lastMouseDownY = y;
 		super.onMouseDown(...);
 	}
+	
+	function onMouseMove(x, y, shift){
+		var msgLayer = kag.fore.messages[1];
+		msgLayer.font.height = 24;
+		
+		if (x > 1000){
+			// FIXME: don't add button if it already exist
+			msgLayer.x = 1000;
+			msgLayer.y = 50;			
+			msgLayer.addButton( % [graphic:"btn.png", hint:"show a button!!!"]);
+			msgLayer.y = 150;
+			msgLayer.addButton(%[graphic:"btn.png",hint:"show another button!!!"]);
+			msgLayer.visible = true;
+		}else{
+			msgLayer.clear();
+			msgLayer.visible=true;
+		}
+	}
 
 	//------------------------------------------------------- キーボード操作 --
 
@@ -5928,4 +5946,3 @@ print FH $content;
 
 
 # */
-

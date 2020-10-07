@@ -486,7 +486,7 @@ function MessageLayer_config()
 // 不透明度を指定します。メッセージ枠用の画像が指定されている場合は無効で
 // す。
 ;frameColor = 0x000000; // position タグの color 属性に相当
-;frameOpacity = 128;  // position タグの opacity 属性に相当
+;frameOpacity = 0;  // position タグの opacity 属性に相当
 
 
 // ◆ 左右上下マージン
@@ -505,8 +505,8 @@ function MessageLayer_config()
 // す。
 ;ml = 16;  // 左端位置
 ;mt = 16;  // 上端位置
-;mw = 640-32;   // 幅
-;mh = 480-32;   // 高さ
+;mw = 1280-32;   // 幅
+;mh = 720-32;   // 高さ
 
 
 // ◆ 自動改行/改ページ
