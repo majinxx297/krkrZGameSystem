@@ -1,0 +1,12 @@
+function showSubMenu(id, t){
+	if (tf.inSub == 1) return;
+	tf.inSub = 1;
+	var curr = kag.current;
+	Debug.message("curr.x = " + curr.x);
+	curr.links[id + 1].object.beginMove( % [time:300, path:"(" + curr.x + ", " +(t + 8 + 70) +",255)"]);
+	curr.x += 15;
+	curr.y = t + 40;
+	curr.addButton( % [graphic:"btn_s.png", hint:"one sub button(tjs ver)"]);
+	curr.y += 15;
+	curr.addButton( % [graphic:"btn_s.png", hint:"another sub button(tjs ver)"]);
+}
