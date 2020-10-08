@@ -3861,21 +3861,27 @@ class KAGWindow extends Window
 		super.onMouseDown(...);
 	}
 	
+	var rmenuOn = false;
+	
 	function onMouseMove(x, y, shift){
 		var msgLayer = kag.fore.messages[1];
 		msgLayer.font.height = 24;
 		
-		if (x > 1000){
-			// FIXME: don't add button if it already exist
-			msgLayer.x = 1000;
+		if (x > 1200&& !rmenuOn){
+			msgLayer.x = 1280;
 			msgLayer.y = 50;			
 			msgLayer.addButton( % [graphic:"btn.png", hint:"show a button!!!"]);
-			msgLayer.y = 150;
-			msgLayer.addButton(%[graphic:"btn.png",hint:"show another button!!!"]);
+			//Debug.message("msgLayer.numLinks:"+msgLayer.numLinks);
+			msgLayer.links[msgLayer.numLinks-1].object.beginMove(%[time:150, path:"(1280,50,0)(1200,50,255)"]);
+			msgLayer.y += 40;
+			msgLayer.addButton( % [graphic:"btn.png", hint:"show another button!!!"]);
+			msgLayer.links[msgLayer.numLinks-1].object.beginMove(%[time:200, path:"(1280,90,0)(1200,90,255)"]);
 			msgLayer.visible = true;
-		}else{
+			rmenuOn = true;
+		}else if (x <= 1200 && rmenuOn){
 			msgLayer.clear();
-			msgLayer.visible=true;
+			msgLayer.visible = true;
+			rmenuOn = false;
 		}
 	}
 
