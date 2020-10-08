@@ -20,15 +20,11 @@ Scripts.execStorage("MessageLayerADV.tjs");
 [position layer=message0 page=fore visible=true top=0 left=0 marginl=0 margint=0]
 [position layer=message0 page=back visible=true top=0 left=0 marginl=0 margint=0]
 
-*menu|
 [cm]
-;[emb exp="global.top.小粉_口0"][l][r]
-[link storage=testBasic.ks target=*start]基本功能测试[endlink][r]
-[link storage=testLight.ks target=*start]闪瞎狗眼测试[endlink][r]
-[link storage=testUI.ks target=*start]系统UI测试[endlink][r]
-[link storage=testChara.ks target=*start]角色测试[endlink][r]
-;[link storage=fdSystem.ks target=*start]角色系统[endlink][r]
-[link storage=testCG.ks target=*start]CG测试[endlink][r]
-[link storage=submenu.ks target=*start]cut-in[endlink][r]
+こんにちは。[l][r]
+ごきげんよろしゅう。[l][r]
+改ページしますよ。[p]
+[cm]
+改ページしました。[p]
 
 

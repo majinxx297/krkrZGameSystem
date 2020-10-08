@@ -1,6 +1,5 @@
 ; test message frame with animation
 *start|
-@call storage="WindowResizable.ks"
 @call storage="zoom.ks"
 @call storage=macro.ks
 @rclick storage="rclick.ks" target="*start" enable=true call=true jump=trye
@@ -21,4 +20,7 @@
 ごきげんよろしゅう。[l][r]
 改ページしますよ。[p]
 [cm]
-改ページしました。
+改ページしました。[p]
+
+@wait time=500
+@jump target=*start
