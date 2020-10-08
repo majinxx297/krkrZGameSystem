@@ -261,6 +261,8 @@ class KAGWindow extends Window
 	var isLeavePeriodEvent = false;	// ムービーのピリオドイベントを保留にするかどうか
 	var isWaitPeriodEvent = false;	// ムービーのピリオドイベント待ち状態かどうか
 	var waitedPeriodEventStorageName = void;	// ピリオドイベント待ちをコールしたストレージ名
+	
+	var hintlayer;
 
 	//------------------------------------------------------ コンストラクタ --
 
@@ -399,6 +401,14 @@ class KAGWindow extends Window
 			fore.messages[0].visible = true;
 			back.messages[0].visible = true;
 		}
+		
+		// hint layer
+		hintlayer = new Layer(this, fore.base);
+		hintlayer.visible = false;
+		hintlayer.ignoreHintSensing = true;
+		hintlayer.font.height = 14;
+		hintlayer.hitThreshold = 256;
+
 
 		chDefaultAntialiased = fore.messages[0].defaultAntialiased;
 			// 文字にアンチエイリアスをかけるかどうか
@@ -4746,6 +4756,32 @@ class KAGWindow extends Window
 		return -2;
 	}
 
+	function onHintChanged(text,x,y,isshow) {
+		if( isshow ) {
+			var w = hintlayer.font.getTextWidth( text ) + 6;
+			var h = hintlayer.font.getTextHeight( text ) + 4;
+			hintlayer.setImageSize( w, h );
+			hintlayer.setSizeToImageSize();
+
+			if( (x+w) > innerWidth ) { x = innerWidth - w; }
+			if( (y+h) > innerHeight ) { y = innerHeight - h; }
+			hintlayer.setPos( x, y );
+
+			hintlayer.fillRect( 0, 0, w, h, 0 );
+			hintlayer.colorRect( 0, 0, w, h, clInfoBk, 196 );
+
+			hintlayer.colorRect( 0, 0, 1, h, 0xFFFFFF );
+			hintlayer.colorRect( 0, 0, w, 1, 0xFFFFFF );
+			hintlayer.colorRect( w-1, 0, 1, h, 0xFFFFFF );
+			hintlayer.colorRect( 0, h-1, w, 1, 0xFFFFFF );
+
+			hintlayer.drawText( 2, 4, text, clInfoText, 220 );
+			hintlayer.visible = true;
+		} else {
+			hintlayer.visible = false;
+		}
+	}	
+	
 	//------------------------------------------------------- タグハンドラ群 --
 
 	function getHandlers()
