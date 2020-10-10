@@ -1,7 +1,6 @@
 ; test message frame with animation
 *start|
 @call storage="zoom.ks"
-@call storage=macro.ks
 @rclick storage="rclick.ks" target="*start" enable=true call=true jump=trye
 @wait time=200
 

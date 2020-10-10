@@ -6,11 +6,7 @@
 [loadplugin module=extrans.dll]
 [loadplugin module=extNagano.dll]
 [loadplugin module=csvParser.dll]
-[call storage="macro.ks"]
-[call storage=GraphicFramePlugin.ks]
-[call storage="zoom.ks"]
-[rclick storage="cl_win.ks" target="*start" enable=true call=true jump=trye]
-[call storage=sysChara.ks]
+[rclick storage="rclick.ks" target="*start" enable=true call=true jump=trye]
 
 ; Load koumei plugin
 ; Cancle the side effect of MessageLayerADV.tjs that makes message0 invisible
