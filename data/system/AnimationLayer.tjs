@@ -553,7 +553,7 @@ class AnimationLayer extends KAGLayer
 		if ( elm !== void && elm.pos !== void ) {
 			// ポジションに従って位置を決定
 			left= window.scPositionX[elm.pos] - width \ 2;
-			top = window.scHeight - height;
+			top = window.scHeight - height+80;
 		}
 		else
 		{
