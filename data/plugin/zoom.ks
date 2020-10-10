@@ -41,7 +41,7 @@ class ZoomPlugin extends KAGPlugin
 		super.finalize(...);
 	}
 
-	function startZoom(storage, layer, mode, basestorage, sl, st, sw, sh, dl, dt, dw, dh, time, accel)
+	function startZoom(storage, layer, mode, basestorage, sl, st, sw, sh, dl, dt, dw, dh, time, accel, fliplr)
 	{
 		// storage : 表示画像
 		// layer : 対象レイヤ
@@ -64,7 +64,7 @@ class ZoomPlugin extends KAGPlugin
 		// 背景画像の読み込み
 		if(basestorage !== void)
 			window.tagHandlers.image(%[ storage : basestorage, layer : layer, page : 'fore']);
-
+		
 		// オブジェクトにパラメータをコピー
 		this.sl = sl; this.st = st; this.sw = sw; this.sh = sh;
 		this.dl = dl; this.dt = dt; this.dw = dw; this.dh = dh;
@@ -80,6 +80,10 @@ class ZoomPlugin extends KAGPlugin
 		{
 			tempLayer = new Layer(window, base);
 			tempLayer.loadImages(storage);
+			if (fliplr){
+				tempLayer.flipLR();
+				Debug.message("flip!");
+			}
 		}
 
 		// overlayLayer 確保
@@ -307,7 +311,7 @@ kag.addPlugin(global.zoom_object = new ZoomPlugin(kag));
 @endif
 ; マクロ登録
 @macro name="bgzoom"
-@eval exp="zoom_object.startZoom(mp.storage, 'base', 'rect', mp.basestorage, +mp.sl, +mp.st, +mp.sw, +mp.sh, +mp.dl, +mp.dt, +mp.dw, +mp.dh, +mp.time, +mp.accel)"
+@eval exp="zoom_object.startZoom(mp.storage, 'base', 'rect', mp.basestorage, +mp.sl, +mp.st, +mp.sw, +mp.sh, +mp.dl, +mp.dt, +mp.dw, +mp.dh, +mp.time, +mp.accel, false)"
 @endmacro
 @macro name="wbgzoom"
 @if exp="zoom_object.moving"
@@ -315,7 +319,7 @@ kag.addPlugin(global.zoom_object = new ZoomPlugin(kag));
 @endif
 @endmacro
 @macro name="fgzoom"
-@eval exp="zoom_object.startZoom(mp.storage, mp.layer, mp.mode, void, +mp.sl, +mp.st, +mp.sw, +mp.sh, +mp.dl, +mp.dt, +mp.dw, +mp.dh, +mp.time, +mp.accel)"
+@eval exp="zoom_object.startZoom(mp.storage, mp.layer, mp.mode, void, +mp.sl, +mp.st, +mp.sw, +mp.sh, +mp.dl, +mp.dt, +mp.dw, +mp.dh, +mp.time, +mp.accel,+mp.fliplr)"
 @endmacro
 @macro name="wfgzoom"
 @if exp="zoom_object.moving"
