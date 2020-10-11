@@ -5600,7 +5600,8 @@ class KAGWindow extends Window
 	move : function(elm)
 	{
 		// 自動移動の開始
-		getLayerFromElm(elm).beginMove(elm);
+		//getLayerFromElm(elm).beginMove(elm);
+		ExtendedMover.beginMove(elm);
 		return 0;
 	} incontextof this,
 
