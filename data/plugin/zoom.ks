@@ -222,6 +222,7 @@ class ZoomPlugin extends KAGPlugin
 				window.fore.base.face = dfBoth;
 				window.fore.base.stretchCopy(dl, dt, dw, dh, tempLayer, 0, 0,
 					tempLayer.imageWidth, tempLayer.imageHeight, stLinear);
+				window.fore.base.doBoxBlur(5, 5);
 			}
 		}
 		else
