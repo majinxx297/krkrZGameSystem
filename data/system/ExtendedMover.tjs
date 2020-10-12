@@ -122,6 +122,8 @@ class ExtendedMover
 			// 一時レイヤを作成して元々の画像を読み込みます
 			refLayer = new Layer(layer.window, layer);
 			refLayer.loadImages(loadParams.storage);
+			if(loadParams.fliplr) refLayer.flipLR();
+			if(loadParams.flipud) refLayer.flipUD();
 			if(transformParams !== void)
 			{
 				// x1, y1, x2, y2, x3, y3 属性を指定してアフィン変換が行われている場合は
