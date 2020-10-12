@@ -202,6 +202,7 @@ KAGLoadScript("MessageLayer.tjs");
 KAGLoadScript("Menus.tjs");
 KAGLoadScript("ExtendedMover.tjs");
 KAGLoadScript("DefaultMover.tjs");
+KAGLoadScript("ExImageHandler.tjs");
 KAGLoadScript("MainWindow.tjs");
 if(Storages.isExistentStorage("Override.tjs"))
 	KAGLoadScript("Override.tjs");

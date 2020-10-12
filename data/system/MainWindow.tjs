@@ -263,6 +263,8 @@ class KAGWindow extends Window
 	var waitedPeriodEventStorageName = void;	// ピリオドイベント待ちをコールしたストレージ名
 	
 	var hintlayer;
+	
+	var image_handler;
 
 	//------------------------------------------------------ コンストラクタ --
 
@@ -408,7 +410,8 @@ class KAGWindow extends Window
 		hintlayer.ignoreHintSensing = true;
 		hintlayer.font.height = 14;
 		hintlayer.hitThreshold = 256;
-
+		
+		image_handler = new ImageHandlerPlugin();
 
 		chDefaultAntialiased = fore.messages[0].defaultAntialiased;
 			// 文字にアンチエイリアスをかけるかどうか
@@ -1335,6 +1338,8 @@ class KAGWindow extends Window
 		forEachEventHook('onStore',
 			function(handler, f) { handler(f.flags, f.options); } incontextof this,
 			%[flags:f, options:void]);
+			
+		image_handler.store(f);
 	}
 
 	function storeFlags()
@@ -1518,6 +1523,8 @@ class KAGWindow extends Window
 		forEachEventHook('onRestore',
 			function(handler, f) { handler(f.flags, f.clear, f.options); } incontextof this,
 			%[flags:f, clear:clear, options:elm]);
+			
+		image_handler.restore(f);
 
 	}
 
@@ -5467,6 +5474,7 @@ class KAGWindow extends Window
 		var start = System.getTickCount();
 		getLayerFromElm(elm).loadImages(elm);
 		dm(elm.storage + " の読み込みに " + (System.getTickCount() - start) + "ms かかりました");
+		image_handler.processImage(elm);
 		return 0;
 	} incontextof this,
 
