@@ -597,6 +597,11 @@ class ExtendedMover
 	{
 		// exmove マクロに指定されている layer, page 属性からレイヤへの参照を取得します
 		var layer = kag.getLayerFromElm(elm);
+		
+		var count = elm.repeat;
+		var path = elm.path;
+		while (--count > 0) path += elm.path;
+		elm.path = path;
 
 		// レイヤの移動を停止します
 		layer.stopMove();
