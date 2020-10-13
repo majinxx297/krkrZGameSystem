@@ -139,8 +139,6 @@ function KAGWindow_createMenus()
 			onReloadScenarioMenuItemClick, false));
 		debugMenu.add(this.showConsoleMenuItem = new KAGMenuItem(this, "コンソール(&C)\tShift+F4", 1,
 			onShowConsoleMenuItemClick, false));
-		debugMenu.add(this.showControllerMenuItem = new KAGMenuItem(this, "コントローラ(&S)\tShift+F1", 1,
-			onShowContollerMenuItemClick, false));
 
 }
 

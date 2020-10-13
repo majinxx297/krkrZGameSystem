@@ -11,6 +11,11 @@ Plugins.link("menu.dll");
 Plugins.link("KAGParser.dll");
 Plugins.link("plugin/perspective.dll"); 
 Plugins.link("plugin/addFont.dll"); 
+
+var base = System.exePath + "k2compat.xp3>";
+Scripts.execStorage(base+"k2compat.tjs");
+Krkr2CompatUtils.scriptBase = base;
+
 @endif
 
 // このスクリプトは一番最初に実行されるスクリプトです
