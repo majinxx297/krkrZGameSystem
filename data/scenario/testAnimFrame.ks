@@ -4,7 +4,7 @@
 @rclick storage="rclick.ks" target="*start" enable=true call=true jump=trye
 @wait time=200
 
-@image storage=BG_客厅 layer=base visible=true 
+@image storage=BG00 layer=base visible=true 
 @position layer=message0 opacity=0 top=512 left=180 marginl=25 margint=25 marginr=25 marginb=25
 @fgzoom storage=woodframe01_white layer=2 sl=580 st=512 sw=0 sh=160 dl=180 dt=512 dw=800 dh=170 time=400 accel=-5
 @wfgzoom canskip=false

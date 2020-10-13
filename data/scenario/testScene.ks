@@ -1,6 +1,6 @@
 *start|
 @call storage=macroBasic.ks
-@bg storage=BG_客厅
+@bg storage=BG00
 @fg_in left=LA00N
 @fg_in right=IN00N
 

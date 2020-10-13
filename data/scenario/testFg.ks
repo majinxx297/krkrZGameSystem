@@ -1,7 +1,7 @@
 ; Sample fg operation and motions
 *start|
 
-@image storage=BG_客厅 layer=base
+@image storage=BG00 layer=base
 
 @image storage=IN00N page=fore layer=0 pos=right visible=true opacity=100 
 @eval exp="tf.left=kag.fore.layers[0].left - 50"

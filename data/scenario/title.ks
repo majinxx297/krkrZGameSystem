@@ -2,7 +2,7 @@
 *start|
 @eval exp="Scripts.execStorage('title.tjs');"
 
-@image storage=BG_客厅 layer=base
+@image storage=BG00 layer=base
 @rclick call=true target="*rclick" name="backward" enabled=true
 
 @current layer=message0
