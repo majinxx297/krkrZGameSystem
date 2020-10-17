@@ -587,7 +587,8 @@ class ExtendedMover
 				return length * +val.substring(0, val.length - 1) / 100;
 			return real +val / mag;
 		}
-		return length * .5; // 値が省略されている場合は 50% とみなします
+		//return length * .5; // 値が省略されている場合は 50% とみなします
+		return 0;
 	}
 
 	// left, top, width, height で表される矩形領域と画面(ウィンドウ内の描画可能領域)の
