@@ -1,0 +1,314 @@
+diff --git a/data/system/MessageLayer.tjs b/data/system/MessageLayer.tjs
+index f4b060b..8ec20c9 100644
+--- a/data/system/MessageLayer.tjs
++++ b/data/system/MessageLayer.tjs
+@@ -474,7 +474,16 @@ class MessageLayer extends KAGLayer
+             }
+         }
+     }
+-    
++
++    //mebius:文字フェード用変数
++	var drawtimer = [];
++	var timercount = 0;
++	var chelm = %[];
++	var timer_interval = 40;//フェード状態更新の頻度（ms）
++	var timer_addopa = 65;//１回のフェードでどれだけ透明度を上げるか（最高255）
++	var first_opa = 50;//最初に描画する時の透明度（最高255）
++	var nonfade_limit = 10;//これ以下の値の（表示が速い）文字速度(ms)では、フェード表示させない上限値。
++	
+ 	function MessageLayer(owner, parent, name, id, do_config)
+ 	{
+ 		// MessageLayer コンストラクタ
+@@ -537,6 +546,34 @@ class MessageLayer extends KAGLayer
+ 		highlightLayer.face = dfAuto;
+ 		highlightLayer.hitType = htProvince;
+ 			// 領域画像で当たり判定を行う
++			
++
++		//mebius:文字フェード用タイマー定義
++		drawtimer[0] = new Timer(onDrawTimer0, '');
++		drawtimer[0].interval = timer_interval;
++		drawtimer[0].enabled = false;
++		drawtimer[1] = new Timer(onDrawTimer1, '');
++		drawtimer[1].interval = timer_interval;
++		drawtimer[1].enabled = false;
++		drawtimer[2] = new Timer(onDrawTimer2, '');
++		drawtimer[2].interval = timer_interval;
++		drawtimer[2].enabled = false;
++		drawtimer[3] = new Timer(onDrawTimer3, '');
++		drawtimer[3].interval = timer_interval;
++		drawtimer[3].enabled = false;
++		drawtimer[4] = new Timer(onDrawTimer4, '');
++		drawtimer[4].interval = timer_interval;
++		drawtimer[4].enabled = false;
++		drawtimer[5] = new Timer(onDrawTimer5, '');
++		drawtimer[5].interval = timer_interval;
++		drawtimer[5].enabled = false;
++
++		chelm.opa = [];
++		chelm.dx = [];
++		chelm.dy = [];
++		chelm.ch = [];
++		chelm.chColor = [];
++		chelm.ll = [];			
+ 	}
+ 
+ 	function finalize()
+@@ -550,10 +587,188 @@ class MessageLayer extends KAGLayer
+ 		super.finalize();
+ 	}
+ 
++	//mebius:文字フェード用。
++	function onDrawTimer0()
++	{
++		chelm.opa[0] += timer_addopa;
++		if (chelm.opa[0] >= 255)
++		{
++			chelm.opa[0] = 255;
++			drawtimer[0].enabled = false;
++		}
++
++		if(edge)
++			chelm.ll[0].drawText(chelm.dx[0], chelm.dy[0], chelm.ch[0], chelm.chColor[0], chelm.opa[0],
++						 antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0);
++		else if(shadow)
++			chelm.ll[0].drawText(chelm.dx[0], chelm.dy[0], chelm.ch[0], chelm.chColor[0], chelm.opa[0],
++						 antialiased, 255, shadowColor, 0, 2, 2);
++		else
++			chelm.ll[0].drawText(chelm.dx[0], chelm.dy[0], chelm.ch[0], chelm.chColor[0], chelm.opa[0],
++						 antialiased);
++	}
++
++	function onDrawTimer1()
++	{
++		chelm.opa[1] += timer_addopa;
++		if (chelm.opa[1] >= 255)
++		{
++			chelm.opa[1] = 255;
++			drawtimer[1].enabled = false;
++		}
++
++		if(edge)
++			chelm.ll[1].drawText(chelm.dx[1], chelm.dy[1], chelm.ch[1], chelm.chColor[1], chelm.opa[1],
++						 antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0);
++		else if(shadow)
++			chelm.ll[1].drawText(chelm.dx[1], chelm.dy[1], chelm.ch[1], chelm.chColor[1], chelm.opa[1],
++						 antialiased, 255, shadowColor, 0, 2, 2);
++		else
++			chelm.ll[1].drawText(chelm.dx[1], chelm.dy[1], chelm.ch[1], chelm.chColor[1], chelm.opa[1],
++						 antialiased);
++	}
++
++	function onDrawTimer2()
++	{
++		chelm.opa[2] += timer_addopa;
++		if (chelm.opa[2] >= 255)
++		{
++			chelm.opa[2] = 255;
++			drawtimer[2].enabled = false;
++		}
++
++		if(edge)
++			chelm.ll[2].drawText(chelm.dx[2], chelm.dy[2], chelm.ch[2], chelm.chColor[2], chelm.opa[2],
++						 antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0);
++		else if(shadow)
++			chelm.ll[2].drawText(chelm.dx[2], chelm.dy[2], chelm.ch[2], chelm.chColor[2], chelm.opa[2],
++						 antialiased, 255, shadowColor, 0, 2, 2);
++		else
++			chelm.ll[2].drawText(chelm.dx[2], chelm.dy[2], chelm.ch[2], chelm.chColor[2], chelm.opa[2],
++						 antialiased);
++	}
++
++	function onDrawTimer3()
++	{
++		chelm.opa[3] += timer_addopa;
++		if (chelm.opa[3] >= 255)
++		{
++			chelm.opa[3] = 255;
++			drawtimer[3].enabled = false;
++		}
++
++		if(edge)
++			chelm.ll[3].drawText(chelm.dx[3], chelm.dy[3], chelm.ch[3], chelm.chColor[3], chelm.opa[3],
++						 antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0);
++		else if(shadow)
++			chelm.ll[3].drawText(chelm.dx[3], chelm.dy[3], chelm.ch[3], chelm.chColor[3], chelm.opa[3],
++						 antialiased, 255, shadowColor, 0, 2, 2);
++		else
++			chelm.ll[3].drawText(chelm.dx[3], chelm.dy[3], chelm.ch[3], chelm.chColor[3], chelm.opa[3],
++						 antialiased);
++	}
++
++	function onDrawTimer4()
++	{
++		chelm.opa[4] += timer_addopa;
++		if (chelm.opa[4] >= 255)
++		{
++			chelm.opa[4] = 255;
++			drawtimer[4].enabled = false;
++		}
++
++		if(edge)
++			chelm.ll[4].drawText(chelm.dx[4], chelm.dy[4], chelm.ch[4], chelm.chColor[4], chelm.opa[4],
++						 antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0);
++		else if(shadow)
++			chelm.ll[4].drawText(chelm.dx[4], chelm.dy[4], chelm.ch[4], chelm.chColor[4], chelm.opa[4],
++						 antialiased, 255, shadowColor, 0, 2, 2);
++		else
++			chelm.ll[4].drawText(chelm.dx[4], chelm.dy[4], chelm.ch[4], chelm.chColor[4], chelm.opa[4],
++						 antialiased);
++	}
++
++	function onDrawTimer5()
++	{
++		chelm.opa[5] += timer_addopa;
++		if (chelm.opa[5] >= 255)
++		{
++			chelm.opa[5] = 255;
++			drawtimer[5].enabled = false;
++		}
++
++		if(edge)
++			chelm.ll[5].drawText(chelm.dx[5], chelm.dy[5], chelm.ch[5], chelm.chColor[5], chelm.opa[5],
++						 antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0);
++		else if(shadow)
++			chelm.ll[5].drawText(chelm.dx[5], chelm.dy[5], chelm.ch[5], chelm.chColor[5], chelm.opa[5],
++						 antialiased, 255, shadowColor, 0, 2, 2);
++		else
++			chelm.ll[5].drawText(chelm.dx[5], chelm.dy[5], chelm.ch[5], chelm.chColor[5], chelm.opa[5],
++						 antialiased);
++	}
++
++	function drawDrawTimer(timernum)
++	{
++		if (drawtimer[timernum].enabled == true)
++		{
++			drawtimer[timernum].enabled = false;
++			chelm.ll[timernum].drawText(chelm.dx[timernum], chelm.dy[timernum],
++						 chelm.ch[timernum], chelm.chColor[timernum], 255,
++					 antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0);
++		}
++	}
++
++	function addDrawTimer(lineLayer,dx,dy,ch,chColor)
++	{
++		if (drawtimer[timercount] !== void)
++		{
++			if (drawtimer[timercount].enabled == true)//使われている場合は、強制描画
++			{
++				drawDrawTimer(timercount);
++			}
++			drawtimer[timercount].enabled = true;
++		}
++
++		chelm.ll[timercount] = lineLayer;
++		chelm.dx[timercount] = dx;
++		chelm.dy[timercount] = dy;
++		chelm.ch[timercount] = ch;
++		chelm.chColor[timercount] = chColor;
++		chelm.opa[timercount] = first_opa;//最初に描画する透明度
++
++		timercount++;
++		if (timercount >= 6)
++			timercount = 0;
++
++	}
++
++	function drawAllDrawTimer()
++	{
++		for (var i=0;i<6;i++)
++		{
++			drawDrawTimer(i);
++		}
++	}
++
++	function stopAllDrawTimer()
++	{
++		for (var i=0;i<6;i++)
++		{
++			if (drawtimer[i].enabled == true)
++			{
++				drawtimer[i].enabled = false;
++			}
++		}
++	}
++	
+ 	function setCompLayer(lay) { comp = lay; }
+ 
+ 	function clearLayer()
+ 	{
++		//mebius:タイマーを全てオフにする。
++		stopAllDrawTimer();
++		
+ 		// レイヤをクリア
+ 		window.updateBeforeCh = 1;
+ 
+@@ -1178,6 +1393,12 @@ class MessageLayer extends KAGLayer
+ 		// 改行
+ 		// ページを越える場合は true, 越えないで改行できる場合は false
+ 		var condition;
++		
++		//mebius:改行時には全て描画
++		if (sf.textfade){
++			drawAllDrawTimer();
++		}
++				
+ 		if(vertical)
+ 		{
+ 			condition= lineLayerOriginX + getLineLayerLeftOffset() - lineSpacing -
+@@ -1280,12 +1501,51 @@ class MessageLayer extends KAGLayer
+ 			dx = int(lineLayerPos), dy = int(lineLayerBase-fontSize);
+ 
+ 
++		//if(edge)
++			//ll.drawText(dx, dy, ch, chColor, 255, antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0); // 文字
++		//else if(shadow)
++			//ll.drawText(dx, dy, ch, chColor, 255, antialiased, 255, shadowColor, 0, shadowOffsetX, shadowOffsetY); // 文字
++		//else
++			//ll.drawText(dx, dy, ch, chColor, 255, antialiased); // 文字
++			
+ 		if(edge)
+-			ll.drawText(dx, dy, ch, chColor, 255, antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0); // 文字
++		{
++			if (kag.skipMode == 0 && sf.textfade && ((!kag.getCurrentRead() && (kag.userChSpeed > nonfade_limit)) || (kag.getCurrentRead() && ((kag.userCh2ndSpeed > nonfade_limit) || ((kag.userCh2ndSpeed == -1) && (kag.userChSpeed > nonfade_limit))))) && f.textfade_enabled)
++			{
++				ll.drawText(dx, dy, ch, chColor, first_opa, antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0); // 文字
++				addDrawTimer(lineLayer,dx,dy,ch,chColor);
++			}
++			else
++			{
++				ll.drawText(dx, dy, ch, chColor, 255, antialiased, edgeEmphasis, edgeColor, edgeExtent, 0, 0); // 文字
++			}
++
++		}
+ 		else if(shadow)
+-			ll.drawText(dx, dy, ch, chColor, 255, antialiased, 255, shadowColor, 0, shadowOffsetX, shadowOffsetY); // 文字
++		{
++			if (kag.skipMode == 0 && sf.textfade && ((!kag.getCurrentRead() && (kag.userChSpeed > nonfade_limit)) || (kag.getCurrentRead() && ((kag.userCh2ndSpeed > nonfade_limit) || ((kag.userCh2ndSpeed == -1) && (kag.userChSpeed > nonfade_limit))))) && f.textfade_enabled)
++			{
++				ll.drawText(dx, dy, ch, chColor, first_opa, antialiased, 255, shadowColor, 0, 2, 2); // 文字
++				addDrawTimer(lineLayer,dx,dy,ch,chColor);
++			}
++			else
++			{
++				ll.drawText(dx, dy, ch, chColor, 255, antialiased, 255, shadowColor, 0, 2, 2); // 文字
++			}
++
++		}
+ 		else
+-			ll.drawText(dx, dy, ch, chColor, 255, antialiased); // 文字
++		{
++			if (kag.skipMode == 0 && sf.textfade && ((!kag.getCurrentRead() && (kag.userChSpeed > nonfade_limit)) || (kag.getCurrentRead() && ((kag.userCh2ndSpeed > nonfade_limit) || ((kag.userCh2ndSpeed == -1) && (kag.userChSpeed > nonfade_limit))))) && f.textfade_enabled)
++			{
++				ll.drawText(dx, dy, ch, chColor, first_opa, antialiased);
++				addDrawTimer(lineLayer,dx,dy,ch,chColor);
++			}
++			else
++			{
++				ll.drawText(dx, dy, ch, chColor, 255, antialiased);
++			}
++		}
+ 
+ 		if(currentRuby != "")
+ 		{

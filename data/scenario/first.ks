@@ -7,4 +7,5 @@
 @call storage=SaveAnyWhere.ks
 @call storage=macro.ks
 @call storage=macroBasic.ks
-
+@eval exp="Scripts.execStorage('MessageLayerADV.tjs');"
+@position layer=message0 visible=true
