@@ -3,13 +3,16 @@
 ; message window related
 ; --------------------------------------------------------
 @macro name=dialog_in
+@eval exp="tf.dialogOn = true"
 @position layer=message0 opacity=0 top=540 left=420 visible=true
 @image layer=3 left=449 top=549 page=fore storage=frame visible=true opacity=0 scale=50
 @move layer=3 path=(,,255,100) time=300 accel=-1
+@move layer=message0 path=(,,255) time=300 accel=-1
 @wm
 @endmacro
 
 @macro name=dialog_out
+@eval exp="tf.dialogOn = false"
 @move layer=message0 time=500 path=($-15,,0)
 @move layer=3 opacity=0 time=300 path=(,$+30,0)
 @wm
