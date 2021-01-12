@@ -1,10 +1,22 @@
 ; Common utils
 *macro|
 
-@macro name=np
+@macro name=savepoint
 @p
 @cm
 @label
+@cm
+@endmacro
+
+@macro name=page
+@eval exp="tf.autosave = 0" cond="tf.autosave === void"
+@eval exp="tf.autosave = (tf.autosave+1)%kag.numBookMarks"
+@call storage=macro.ks target=*savepoint
+;@save place=&tf.autosave
+@endmacro
+
+@macro name = n
+@p
 @cm
 @endmacro
 
@@ -25,3 +37,6 @@
 ; pass non-Unicode arg names to this empty macro so that FlashDevelop will list those arg names into autocomplete list
 @macro name=args
 @endmacro
+
+*savepoint|
+@return
