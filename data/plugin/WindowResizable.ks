@@ -102,7 +102,7 @@ class WindowResizable extends KAGPlugin {
 		// 吉里吉里Z にはメニューが無いので、無い場合はスキップ
 		if (typeof(win.displayMenu) != 'undefined') {
 			win.displayMenu.add(line = new MenuItem(win, "-"));
-			item = new KAGMenuItem( win, "標準サイズに戻す(&N)", 0,
+			item = new KAGMenuItem( win, "重置窗口尺寸(N)", 0,
 					win.onNormalSizeMenuItemClick, false);
 			win.displayMenu.add(item);
 		}
