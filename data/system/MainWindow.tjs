@@ -3874,7 +3874,7 @@ class KAGWindow extends Window
 		var msgLayer = kag.fore.messages[1];
 		msgLayer.font.height = 24;
 		
-		if (x > 1200&& !rmenuOn){
+		if (x > kag.innerWidth*.9 && !rmenuOn){
 			msgLayer.x = 1280;
 			msgLayer.y = 50;			
 			msgLayer.addButton( % [graphic:"btn.png", hint:"show a button!!!"]);
@@ -3885,7 +3885,7 @@ class KAGWindow extends Window
 			msgLayer.links[msgLayer.numLinks-1].object.beginMove(%[time:200, path:"(1280,90,0)(1200,90,255)"]);
 			msgLayer.visible = true;
 			rmenuOn = true;
-		}else if (x <= 1200 && rmenuOn){
+		}else if (x <= kag.innerWidth*.9 && rmenuOn){
 			msgLayer.clear();
 			msgLayer.visible = true;
 			rmenuOn = false;
