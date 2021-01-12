@@ -1,6 +1,19 @@
 ; Common utils
 *macro|
+; --------------------------------------------------------
+; General utils
+; --------------------------------------------------------
+@macro name=clip
+@eval exp="kag.fore.layers[mp.child].parent = kag.fore.layers[mp.parent]"
+@endmacro
 
+@macro name=unclip
+@eval exp="kag.fore.layers[mp.child].parent = kag.fore.base"
+@endmacro
+
+; --------------------------------------------------------
+; label related
+; --------------------------------------------------------
 @macro name=savepoint
 @p
 @cm
@@ -32,7 +45,10 @@
 
 @return
 
+
+; --------------------------------------------------------
 ; FOR FLASHDEVELOP AUTOCOMP SUPPORT ONLY
+; --------------------------------------------------------
 
 ; pass non-Unicode arg names to this empty macro so that FlashDevelop will list those arg names into autocomplete list
 @macro name=args

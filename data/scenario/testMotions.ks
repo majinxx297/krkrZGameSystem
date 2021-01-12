@@ -7,6 +7,7 @@
 [link target="*example3"]cut-in[endlink][r]
 [link target="*example4"]哆嗦[endlink][r]
 [link target="*example5"]窗帘转场[endlink][r]
+[link target="*example6"]FFD-like cut-in[endlink][r]
 @s
 
 
@@ -68,4 +69,25 @@
 [trans layer=0 time=400 method=universal rule=makuage vague=1]
 [wt]
 @freeimage layer=0
+@jump target=*start
+
+*example6
+@cm
+@call storage=zoom.ks
+
+@image layer=0 storage=sampleCG  visible=true left=0
+主体CG[l][r]
+
+@fgzoom storage=sampleCG_p1_b layer=1 sw=1 sh=720 st=0 sl=325 dw=213 dh=720 dt=0 dl=225 time=500 accel=2
+@wfgzoom
+
+@image layer=2 storage=sampleCG_p1_f visible=true left=0 top=240 opacity=0
+
+@clip parent=1 child=2
+
+@move layer=2 path=($-50,,255) time=1000
+@wm
+Cut-in,移动角色[l][r]
+@freeimage layer=0
+@waitclick
 @jump target=*start
