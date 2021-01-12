@@ -1,0 +1,38 @@
+﻿function checkLayerName(num, target){
+	if (kag.fore.layers[num].Anim_loadParams !== void){
+		var name = kag.fore.layers[num].Anim_loadParams.name;
+		if (name !== void)
+			return (name == target);
+		else
+			return false;
+	}
+	else return false;
+}
+
+function getStorage(num){
+	if (kag.fore.layers[num].Anim_loadParams !== void)
+		return kag.fore.layers[num].Anim_loadParams.storage;
+	else return "";
+}
+
+function fgFocusOff(num){
+	var elm = kag.fore.layers[num].Anim_loadParams;
+	if(elm !== void){
+		elm['mcolor'] = 0x000000;
+		elm['mopacity'] = 60;
+		elm['opacity'] = kag.fore.layers[num].opacity;
+		delete elm.pos;
+		kag.fore.layers[num].loadImages(elm);
+	}
+}
+
+function fgFocusOn(num){
+	var elm = kag.fore.layers[num].Anim_loadParams;
+	if(elm !== void){
+		elm['opacity'] = kag.fore.layers[num].opacity;
+		delete elm.pos;
+		delete elm.mcolor;
+		delete elm.mopacity;
+		kag.fore.layers[num].loadImages(elm);
+	}
+}

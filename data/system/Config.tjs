@@ -220,7 +220,7 @@ function KAGWindow_config()
 // 1 を指定すると 保存可能なラベルを通過するごとに自動的に通過記録を行いま
 //   す。
 // 2 を指定すると選択肢 ( s タグで停止 ) ごとに通過記録を行います。
-;recordHistoryOfStore = 0;
+;recordHistoryOfStore = 1;
 
 
 // ◆ 通過記録の最大数
@@ -254,7 +254,7 @@ function KAGWindow_config()
 // 数が多いと速度が低下したりメモリを消費しますので、必要以上に大きな数を指
 // 定しない方が良いでしょう。
 // laycount タグでシナリオ内でも変更できます。
-;numCharacterLayers = 3;
+;numCharacterLayers = 4;
 
 
 // ◆ 前景レイヤの左右中心位置指定
@@ -494,10 +494,10 @@ function MessageLayer_config()
 // た場合は、メッセージ枠の表示範囲内に設定する必要があります。
 // これらは、position タグの marginl, maringt, marginr, marginb 属性に対応
 // します。
-;marginL = 8; // 左余白
-;marginT = 8; // 上余白
-;marginR = 8; // 右余白
-;marginB = 8; // 下余白
+;marginL = 0; // 左余白
+;marginT = 0; // 上余白
+;marginR = 0; // 右余白
+;marginB = 0; // 下余白
 
 
 // ◆ 初期位置
@@ -524,19 +524,19 @@ function MessageLayer_config()
 
 // ◆ 文字の大きさ
 // デフォルトの文字の大きさ ( 高さ ) を pixel 単位で指定します。
-;defaultFontSize = 20;  // deffont タグの size 属性に相当
+;defaultFontSize = 23;  // deffont タグの size 属性に相当
 
 
 // ◆ 行間
 // 行間を pixel 単位で指定します。
-;defaultLineSpacing = 6; // defstyle タグの linespacing 属性に相当
+;defaultLineSpacing = 8; // defstyle タグの linespacing 属性に相当
 
 // ◆ 字間
 // 字間を pixel 単位で指定します。
 // デフォルトは 0 で、正あるいは負のオフセットで指定します。
 // 負の数値を指定すると字間が詰まります。正の数値を指定すると字間が空きま
 // す。
-;defaultPitch = 0; // defstyle タグの pitch 属性に相当
+;defaultPitch = 1; // defstyle タグの pitch 属性に相当
 
 
 // ◆ 文字の書体
@@ -553,7 +553,7 @@ function MessageLayer_config()
 
 // ◆ 文字の色
 // デフォルトの文字の色を 0xRRGGBB 形式で指定します。
-;defaultChColor = 0xffffff;  // deffont タグの color 属性に相当
+;defaultChColor = 0x2e2c27;  // deffont タグの color 属性に相当
 
 
 // ◆ 文字をボールドにするか
@@ -582,19 +582,19 @@ function MessageLayer_config()
 
 // ◆ 縁取りの色
 // 縁取りの色を 0xRRGGBB 形式で指定します。
-;defaultEdgeColor = 0x000000;  // deffont タグの edgecolor に属性に相当
+;defaultEdgeColor = 0x6e6b66;  // deffont タグの edgecolor に属性に相当
 
 
 // ◆ 影を描画するか
 // する場合は true, しない場合は false を指定します。
-;defaultShadow = true;  // deffont タグの shadow 属性に相当
+;defaultShadow = false;  // deffont タグの shadow 属性に相当
 
 
 // ◆ 縁取りをするか
 // する場合は true, しない場合は false を指定します。KAG3 から、縁取りと影
 // を同時に描画することができなくなりました。縁取りを指定した場合は縁取りが
 // 優先されます。
-;defaultEdge = false;  // deffont タグの edge 属性に相当
+;defaultEdge = true;  // deffont タグの edge 属性に相当
 
 
 // ◆ クリック待ちグリフの画像ファイル

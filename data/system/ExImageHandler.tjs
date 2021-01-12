@@ -375,8 +375,8 @@ class ImageHandlerPlugin extends KAGPlugin
 			message = (page ? "表画面の " : "") + index + " 番のレイヤについて\n" + message;
 		else
 			message = (page ? "裏画面の " : "") + kag.back.layers.find(layer) + " 番のレイヤについて\n" + message;
-		System.inform(message, "警告"); // 警告メッセージボックスを表示する場合
-		//dm("警告：" + message); // コンソールに警告メッセージを出力する場合
+		//System.inform(message, "警告"); // 警告メッセージボックスを表示する場合
+		dm("警告：" + message); // コンソールに警告メッセージを出力する場合
 	}
 
 	function store(f)
