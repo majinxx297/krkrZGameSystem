@@ -16,4 +16,4 @@
 @position layer=message0 visible=true width=450
 
 @image storage=white layer=base
-@jump target=*start storage=testScene2.ks
+@jump target=*start storage=
