@@ -115,8 +115,8 @@ function KAGWindow_createMenus()
 	}
 	else
 	{
-		menu.add(this.restoreMenu = new KAGMenuItem(this, "记录(J)", 0, onRestoreMenuClick, false));
-		menu.add(this.storeMenu = new KAGMenuItem(this, "读取(M)", 0, onStoreMenuClick, false));
+		menu.add(this.restoreMenu = new KAGMenuItem(this, "读取(J)", 0, onRestoreMenuClick, false));
+		menu.add(this.storeMenu = new KAGMenuItem(this, "记录(M)", 0, onStoreMenuClick, false));
 	}
 
 	menu.add(this.displayMenu = new KAGMenuItem(this, "画面(V)", 0, void, false));
