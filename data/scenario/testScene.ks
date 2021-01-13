@@ -19,7 +19,7 @@
 但是爷不哭！"[n]
 
 @拉斯塔 talk
-"prprprprprprprprprprprprprprprprprprprprprprprpr"[n]
+"rerorerorerorerorerorerorerorerorerorerorerorerorerorerorerorerorerorero"[n]
 
 @银杏 talk
 "prprprprprprprprprprprprprprprprprprprprprprprpr"[n]
@@ -29,6 +29,8 @@
 两个人离开了房间。[n]
 
 @dialog_out
+
+@jump target=*start
 
 
 
