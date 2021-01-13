@@ -703,15 +703,15 @@ function HistoryLayer_config()
 
 
 // ◆ フォントを太字にするか
-;fontBold = true;
+;fontBold = false;
 
 
 // ◆ フォントのサイズ ( pixel単位)
-;fontHeight = 24;
+;fontHeight = 20;
 
 
 // ◆ ラインの高さ
-;lineHeight = 26;
+;lineHeight = 30;
 
 
 // ◆ 縦書きの場合は true
@@ -751,12 +751,88 @@ function HistoryLayer_config()
 //  編集したり消したりしないでください )
 
 //[start-historylayer-additionals]
+	if (typeof(.ExtHistoryLayer) != 'undefined' && this instanceof "HistoryMessageLayer") {
+		historyColor = 0x504745;	// 履歴フォント色
+		hbColor = 0x808080;		// 履歴ボタン色
+		hbCaptionColor = 0xffffff;	// 履歴ボタンキャプション色
+		rubyName = "楷体";	// ルビフォント名
+		rubyBold = true;		// ルビ太字細字
+		rubyHeight = 10;		// ルビサイズ
+		rubyOffset = 0;		// -の値で本文に近づく
+
+		marginL = 0;			// 左マージン
+		marginR = 120;			// 右マージン
+		marginT = 0;			// 上マージン
+		marginB = 0;			// 下マージン
+
+		// 文字の影設定(ルビも含む)
+		// 袋文字にするならオフセット=0、幅=3、Level=1024とかにする
+		// 影をつけるなら、履歴のlineHeightをrubyHeight+fontHeightより
+		// 大きくしないと、履歴中で次の行がかかって見栄えが悪くなる
+		shadowLevel   = 512;		// 影レベル
+		shadowColor   = 0xc5bcb6;	// 影の色(0xRRGGBBで指定)
+		shadowWidth   = 1;		// 影の幅
+		shadowOffsetX = 1;		// 影の横方向オフセット
+		shadowOffsetY = 1;		// 影の縦方向オフセット
+	}
 
 //[end-historylayer-additionals]
 
 }
 
+function ExtHistoryLayer_config()
+{
+	// 履歴中メッセージレイヤを隠すかどうか(def=false(隠さない))
+	hidemessage = false;
 
+	// 背景画像ファイル名(""で指定なし)
+	bggraphic = "history_bg.png";
+
+	// 背景色(背景画像bggraphicを指定すると無効)
+	bgColor = 0xc8ffffff;
+	
+	// 履歴メッセージウィンドウの座標(Infinityでdefault値を表す)
+	messageTop = Infinity;		// def = scrollbarHeight
+	messageLeft = 330;		// def = 0
+	
+	// 履歴メッセージウィンドウの大きさ(Infinityでdefault値を表す)
+	messageWidth = 690;	// def = kag.scWidth - scrollbarHeight
+	messageHeight = Infinity;	// def = kag.scHeight
+	
+	// クローズボタンの画像ファイル名(""で指定なし)
+	closegraphic = "";
+
+	// クローズボタンの座標(Infinityでdefault値を表す)
+	closeButtonTop = Infinity;	// def = 0
+	closeButtonLeft = 1020;	// def = kag.scWidth-closeButton.width;
+	
+	// prevボタンの画像ファイル名(""で指定なし)
+	prevgraphic = "";
+	
+	// nextボタンの画像ファイル名(""で指定なし)
+	nextgraphic = "";
+
+	// スクロールバーのスライダー画像ファイル名(""で指定なし)
+	slgraphic = "";
+
+	// Scrollbarのボタン色(メッセージレイヤの履歴ボタンなども含む)
+	buttonColor = 0x808080;
+	
+	// Scrollbarのボタンキャプション色(ボタン画像を指定すると意味なくなる)
+	buttonCaptionColor = 0xffffff;
+	
+	// スクロールバー幅(sbbggraphicが指定されていると無視される)
+	scrollbarHeight = 10;
+	
+	// スクロールバー背景色(画像btnなら画像に合わせるので未使用)
+	scrollbarBack = 0x00ffffff;
+
+	// スクロールバー背景画像ファイル名
+	sbbggraphic = "";
+
+	// フェードイン・アウトする時間(ms)
+	fadetime = 200;
+	}
 
 
 

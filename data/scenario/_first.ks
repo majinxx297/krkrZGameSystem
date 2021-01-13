@@ -6,11 +6,11 @@
 @call storage="WindowResizable.ks"
 @call storage="AltEnterFullScreen.ks"
 @call storage=SaveAnyWhere.ks
+@call storage=ExtHistoryLayer.ks
 @call storage=macro.ks
 @rclick storage="rclick.ks" target="*rclick" enable=true call=true jump=trye
 
 @eval exp="Scripts.execStorage('common.tjs');"
-
 @eval exp="Scripts.execStorage('MessageLayerADV.tjs');"
 @position layer=message0 visible=true width=450
 

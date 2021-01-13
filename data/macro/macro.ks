@@ -32,6 +32,7 @@
 @macro name = n
 @p
 @cm
+@hr
 @endmacro
 
 @macro name = sp
@@ -73,12 +74,27 @@
 @endmacro
 
 ; --------------------------------------------------------
-; layer operation
+; Background layer 
+; --------------------------------------------------------
+
+@macro name=bg
+@image storage=%storage left=0 top=0 layer=0 visible=true mode=psmul
+@endmacro
+
+; --------------------------------------------------------
+; Charater layer 
 ; --------------------------------------------------------
 
 @macro name=talk_update
 	@eval exp="fgFocusOff(1)" cond="!checkLayerName(1, mp.name)"
-	@eval exp="fgFocusOff(2)" cond="!checkLayerName(2, mp.name)"
+	@eval exp="fgFocusOff(2)" cond="!checkLayerName(2, mp.name)"	
+@endmacro
+
+@macro name=show_icon
+@if exp="kag.lastClickGlyphWhich !='line'"
+	@himage graphic=&mp.name+'_icon'
+	@hlocate ipos=60
+@endif
 @endmacro
 
 @macro name=fg
@@ -110,13 +126,15 @@
 	@image * page=fore layer=&tf.layer visible=true storage=&tf.storage fliplr=&tf.fliplr pos=&tf.pos
 	@move layer=&tf.layer path=($+&tf.dx,,255,,) time=300
 	;@wm
-	@if exp="mp.talk"
+	@if exp="mp.talk"		
 		@talk_update name=%name
+		@show_icon *
 	@endif
 @else
 	@image * page=fore layer=&tf.layer visible=true storage=&tf.storage fliplr=&tf.fliplr	
 	@talk_update name=%name
 	@if exp="mp.talk"
+		@show_icon *
 		@move layer=&tf.layer path=($+5,,)($-5,,) time=100
 		@wm		
 	@endif
@@ -141,10 +159,6 @@
 		@wm
 	@endif
 @endif
-@endmacro
-
-@macro name=bg
-@image storage=%storage left=0 top=0 layer=0 visible=true mode=psmul
 @endmacro
 
 @return

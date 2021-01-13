@@ -4831,6 +4831,7 @@ class KAGWindow extends Window
 		else if (text == '"' && current.indentxpos > 0){
 			text = '」';
 			current.resetIndent();
+			kag.historyLayer.endIndent();
 		}	
 		
 		if(currentWithBack) current.comp.processCh(text);
@@ -4849,7 +4850,10 @@ class KAGWindow extends Window
 			}
 		}
 		
-		if(text == '「') current.setIndent();
+		if (text == '「') {
+			current.setIndent();
+			kag.historyLayer.beginIndent();
+		}
 		return acs;
 	} incontextof this,
 
