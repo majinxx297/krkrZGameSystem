@@ -7,7 +7,6 @@
 @call storage="AltEnterFullScreen.ks"
 @call storage=SaveAnyWhere.ks
 @call storage=macro.ks
-@call storage=macroFg.ks
 @rclick storage="rclick.ks" target="*rclick" enable=true call=true jump=trye
 
 @eval exp="Scripts.execStorage('common.tjs');"

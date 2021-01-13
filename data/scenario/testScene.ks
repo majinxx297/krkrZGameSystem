@@ -1,16 +1,35 @@
+﻿; Test new macros for basic scene
 *start|
-@call storage=macroBasic.ks
+
 @bg storage=BG00
-@fg_in left=LA00N
-@fg_in right=IN00N
+@dialog_in
 
-@message_in
+@fg_in name=银杏 normal r talk
+"爷来了。"[n]
 
-@talk right
-嗨呀我说话了！[p][cm]
+@银杏 sad talk
+"爷哭了。"[n]
 
-@talk left
-嗨呀我也说话了！[l][r]
-@fg_action left jump
-不仅会说话还会蹦跶！[p][cm]
+@dialog_in
+@fg_in name=拉斯塔 normal l talk
+"爷也来了，[l]
+
+@银杏 normal
+@拉斯塔 smile2 talk
+但是爷不哭！"[n]
+
+@拉斯塔 talk
+"prprprprprprprprprprprprprprprprprprprprprprprpr"[n]
+
+@银杏 talk
+"prprprprprprprprprprprprprprprprprprprprprprprpr"[n]
+
+@fg_out all
+
+两个人离开了房间。[n]
+
+@dialog_out
+
+
+
 
