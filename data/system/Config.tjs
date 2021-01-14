@@ -761,7 +761,7 @@ function HistoryLayer_config()
 		rubyOffset = 0;		// -の値で本文に近づく
 
 		marginL = 0;			// 左マージン
-		marginR = 120;			// 右マージン
+		marginR = 720;			// 右マージン
 		marginT = 0;			// 上マージン
 		marginB = 0;			// 下マージン
 
@@ -796,7 +796,7 @@ function ExtHistoryLayer_config()
 	messageLeft = 330;		// def = 0
 	
 	// 履歴メッセージウィンドウの大きさ(Infinityでdefault値を表す)
-	messageWidth = 690;	// def = kag.scWidth - scrollbarHeight
+	messageWidth = Infinity;	// def = kag.scWidth - scrollbarHeight
 	messageHeight = Infinity;	// def = kag.scHeight
 	
 	// クローズボタンの画像ファイル名(""で指定なし)
@@ -816,7 +816,7 @@ function ExtHistoryLayer_config()
 	slgraphic = "";
 
 	// Scrollbarのボタン色(メッセージレイヤの履歴ボタンなども含む)
-	buttonColor = 0x808080;
+	buttonColor = 0xe0e0e0;
 	
 	// Scrollbarのボタンキャプション色(ボタン画像を指定すると意味なくなる)
 	buttonCaptionColor = 0xffffff;
