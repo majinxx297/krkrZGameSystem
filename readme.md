@@ -1,4 +1,4 @@
-# krkrZ Game System
+# 魔人式krkrzADVsystem
 
 从零开始的吉里吉里ADV系统搭建☆ミ
 
