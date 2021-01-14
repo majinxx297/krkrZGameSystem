@@ -15,7 +15,7 @@
 "爷也来了，[l]
 
 @银杏 normal
-@拉斯塔 smile2 talk
+@拉斯塔 smile2
 但是爷不哭！"[n]
 
 @拉斯塔 talk

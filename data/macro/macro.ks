@@ -93,10 +93,8 @@
 @endmacro
 
 @macro name=show_icon
-@if exp="kag.lastClickGlyphWhich !='line'"
-	@himage graphic=&mp.name+'_icon'
-	@hlocate ipos=60
-@endif
+@himage graphic=&mp.name+'_icon'
+@hlocate ipos=60
 @endmacro
 
 @macro name=fg
