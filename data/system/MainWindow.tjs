@@ -3051,6 +3051,7 @@ class KAGWindow extends Window
 		// メッセージレイヤを一時的に隠す
 		if(messageLayerHiding) return;
 		setMessageLayerHiddenState(true);
+		fore.layers[numCharacterLayers - 1].visible = false;
 		if(typeof this.rightClickMenuItem !== "undefined")
 			rightClickMenuItem.checked = true;
 		messageLayerHiding = true;
@@ -3063,6 +3064,7 @@ class KAGWindow extends Window
 		// 一時的に隠されていたメッセージレイヤを元に戻す
 		if(!messageLayerHiding) return;
 		setMessageLayerHiddenState(false);
+		fore.layers[numCharacterLayers - 1].visible = true;
 		if(typeof this.rightClickMenuItem !== "undefined")
 			rightClickMenuItem.checked = false;
 		messageLayerHiding = false;

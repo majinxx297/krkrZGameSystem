@@ -783,7 +783,7 @@ function HistoryLayer_config()
 function ExtHistoryLayer_config()
 {
 	// 履歴中メッセージレイヤを隠すかどうか(def=false(隠さない))
-	hidemessage = false;
+	hidemessage = true;
 
 	// 背景画像ファイル名(""で指定なし)
 	bggraphic = "history_bg.png";
