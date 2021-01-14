@@ -749,6 +749,8 @@ class KAGWindow extends Window
 				}
 			}
 		}
+		if (ev.type == "onMouseMove")
+			caption = "魔人式krkrzADVsystem : 当前坐标(" + ev.x + ", " + ev.y + ")";
 	}
 
 	//------------------------------------------------------ tempLayer 関連 --
@@ -886,7 +888,10 @@ class KAGWindow extends Window
 			if(fullScreened)
 				fullScreenMenuItem.checked = true;
 			else
+			{
 				windowedMenuItem.checked = true;
+				menu.visible = true;
+			}
 		}
 		saveSystemVariables();
 	}
@@ -904,8 +909,10 @@ class KAGWindow extends Window
 				Debug.notice("フルスクリーンモードに移行できませんでした : " + e.message);
 			}
 			fullScreened = fullScreen;
-			if(fullScreened)
+			if(fullScreened){
 				fullScreenMenuItem.checked = true;
+				menu.visible = false;
+			}				
 			else
 				windowedMenuItem.checked = true;
 		}
