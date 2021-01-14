@@ -76,6 +76,20 @@
 @endmacro
 
 ; --------------------------------------------------------
+; layer actions
+; --------------------------------------------------------
+
+@macro name = popx
+@move layer=&mp.layer path=($+5,,)($-5,,) time=100
+@wm	
+@endmacro
+
+@macro name = popy
+@move layer=&mp.layer path=(,$+5,)(,$-5,) time=100
+@wm	
+@endmacro
+
+; --------------------------------------------------------
 ; Background layer 
 ; --------------------------------------------------------
 
@@ -132,11 +146,14 @@
 	@endif
 @else
 	@image * page=fore layer=&tf.layer visible=true storage=&tf.storage fliplr=&tf.fliplr	
-	@talk_update name=%name
+	@talk_update name=%name	
 	@if exp="mp.talk"
-		@show_icon *
-		@move layer=&tf.layer path=($+5,,)($-5,,) time=100
-		@wm		
+		@show_icon *	
+		@popx layer= &tf.layer
+	@elsif exp = "mp.popx"
+		@popx layer= &tf.layer
+	@elsif exp = "mp.popy"
+		@popy layer= &tf.layer
 	@endif
 @endif
 @endmacro
