@@ -4834,14 +4834,13 @@ class KAGWindow extends Window
 		}
 		var text = elm.text;
 
-		if (text == '"' && current.indentxpos == 0){
-			text = '「';
-		}						
-		else if (text == '"' && current.indentxpos > 0){
-			text = '」';
+		if (text == '"' && current.indentxpos == 0) text = '「';
+		else if (text == '"' && current.indentxpos > 0) text = '」';
+		
+		if(text == '」'){
 			current.resetIndent();
-			kag.historyLayer.endIndent();
-		}	
+			kag.historyLayer.endIndent();			
+		}
 		
 		if(currentWithBack) current.comp.processCh(text);
 		if(current.processCh(text))
