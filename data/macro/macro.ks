@@ -1,4 +1,4 @@
-*macro|
+*Common| 通用
 ; --------------------------------------------------------
 ; General utils
 ; --------------------------------------------------------
@@ -11,6 +11,7 @@
 @eval exp="kag.fore.layers[mp.child].parent = kag.fore.base"
 @endmacro
 
+*Text_Management|文字显示及操作
 ; --------------------------------------------------------
 ; label management
 ; --------------------------------------------------------
@@ -25,7 +26,7 @@
 @macro name=page
 @eval exp="tf.autosave = 0" cond="tf.autosave === void"
 @eval exp="tf.autosave = (tf.autosave+1)%kag.numBookMarks"
-@call storage=macro.ks target=*savepoint
+@call storage="macro.ks" target=*savepoint
 ;@save place=&tf.autosave
 @endmacro
 
@@ -46,6 +47,7 @@
 @l
 @endmacro
 
+*Message_window| 对话框管理
 ; --------------------------------------------------------
 ; message window
 ; --------------------------------------------------------
@@ -92,6 +94,8 @@
 	@layopt layer=&tf.num visible=false
 @endif
 @endmacro
+
+*Sound_Effects| 音乐音效管理
 ; --------------------------------------------------------
 ; SE
 ; --------------------------------------------------------
@@ -100,6 +104,7 @@
 	@playse storage=%name loop=true
 @endmacro
 
+*Layer_Actions| 动效
 ; --------------------------------------------------------
 ; layer actions
 ; --------------------------------------------------------
@@ -114,6 +119,7 @@
 @wm	
 @endmacro
 
+*Background |背景图
 ; --------------------------------------------------------
 ; Background layer 
 ; --------------------------------------------------------
@@ -122,6 +128,7 @@
 @image storage=%storage left=0 top=0 layer=0 visible=true
 @endmacro
 
+*Chara_manipulation |角色
 ; --------------------------------------------------------
 ; Charater layer 
 ; --------------------------------------------------------
@@ -184,7 +191,7 @@
 @endmacro
 
 @macro name=fg_in
-@call storage=macro.ks target=*fg_in 
+@call storage="../macro/macro.ks" target=*fg_in 
 @fg * opacity=0 fg_in
 @endmacro
 
@@ -212,14 +219,6 @@
 @endmacro
 
 @return
-
-; --------------------------------------------------------
-; FOR FLASHDEVELOP AUTOCOMP SUPPORT ONLY
-; --------------------------------------------------------
-
-; pass non-Unicode arg names to this empty macro so that FlashDevelop will list those arg names into autocomplete list
-@macro name=args
-@endmacro
 
 *savepoint|
 @return
