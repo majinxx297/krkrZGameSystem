@@ -329,6 +329,8 @@ function KAGWindow_config()
 ;aboutWidth = 320; // 幅
 ;aboutHeight = 200; // 高さ
 
+;supportReadingKey = VK_CONTROL;
+
 
 // ◆ ウィンドウや動作の追加の設定
 // 追加の設定項目がある場合は
@@ -470,7 +472,7 @@ function MessageLayer_config()
 // メッセージ枠用の画像も、ltAddAlpha 用に作成された
 // 画像を用いる必要があります (自動的には判別されません)。
 // ltAddAlpha 用の画像は画像フォーマットコンバータで作成可能です。
-;layerType = ltAddAlpha;
+;layerType = ltAlpha;
 
 // ◆ メッセージ枠用の画像
 // メッセージ枠用の画像のファイル名を指定します。
