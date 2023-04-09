@@ -1,13 +1,10 @@
 *rclick
-@if exp="tf.dialogOn == true"
-	@eval exp="tf.num = kag.numCharacterLayers-1"
-	@rclick jump=true target=*exit enabled=true
-	@move layer=message0 time=500 path=($-15,,0)
-	@move layer=&tf.num opacity=0 time=300 path=($-40,,0)
-	@wm
-	@s
-@endif
 
+@if exp="tf.dialogOn == true"	
+	@dialog_off
+@endif	
+@rclick call=true target=*exit enabled=true
+@return
 
 *exit
 @if exp="tf.dialogOn == true"

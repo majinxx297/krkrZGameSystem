@@ -3886,7 +3886,7 @@ class KAGWindow extends Window
 		if (x > kag.innerWidth*.9 && !rmenuOn){
 			msgLayer.x = 1280;
 			msgLayer.y = 50;			
-			msgLayer.addButton( % [graphic:"btn.png", hint:"show a button!!!"]);
+			msgLayer.addButton( % [graphic:"btn.png", hint:"show a button!!!", exp:"kag.callExtraConductor('save.ks', '*save')"]);
 			//Debug.message("msgLayer.numLinks:"+msgLayer.numLinks);
 			msgLayer.links[msgLayer.numLinks-1].object.beginMove(%[time:150, path:"(1280,50,0)(1200,50,255)"]);
 			msgLayer.y += 40;

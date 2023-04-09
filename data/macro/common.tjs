@@ -26,7 +26,13 @@ function fgFocusOff(num){
 	}
 }
 
-function fgFocusOn(num){
+function blurLayers(begin, end){
+	for (var i = begin; i < end; i++ ){
+		kag.fore.layers[i].doBoxBlur(5, 5);
+	}
+}
+
+function resetLayer(num){
 	var elm = kag.fore.layers[num].Anim_loadParams;
 	if(elm !== void){
 		elm['opacity'] = kag.fore.layers[num].opacity;
@@ -35,4 +41,10 @@ function fgFocusOn(num){
 		delete elm.mopacity;
 		kag.fore.layers[num].loadImages(elm);
 	}
+}
+
+function resetLayers(begin, end){
+	for (var i = begin; i < end; i++ ){
+		resetLayer(i);
+	}	
 }
