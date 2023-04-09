@@ -48,3 +48,22 @@ function resetLayers(begin, end){
 		resetLayer(i);
 	}	
 }
+
+function eraseAllLayers() {
+	for (var i = 0; i < kag.fore.layers.count; i++) {
+		kag.fore.layers[i].visible = false;
+		kag.fore.layers[i].freeImage();
+	}
+	kag.fore.base.freeImage();
+}
+
+function stretchAllLayers(){
+	var templayer = new Layer(kag, kag.fore.base);
+	for (var i = 0; i < kag.fore.layers.count; i++) {
+		templayer.assignImages(kag.fore.layers[i]);
+		dm("Layer["+i+"]\n");
+		dm(templayer.imageWidth);
+		dm(templayer.imageHeight);
+		kag.fore.layers[i].stretchCopy(0,0,2*templayer.imageWidth,2*templayer.imageHeight,templayer,0,0,templayer.imageWidth,templayer.imageHeight, stBlackmanSinc);
+	}
+}
