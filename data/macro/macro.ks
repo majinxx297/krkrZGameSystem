@@ -63,11 +63,35 @@
 @macro name=dialog_out
 @eval exp="tf.dialogOn = false"
 @eval exp="tf.num = kag.numCharacterLayers-1"
-@move layer=message0 time=500 path=($-15,,0)
+;@move layer=message0 time=500 path=($-15,,0)
 @move layer=&tf.num opacity=0 time=300 path=(,$+30,0)
 @wm
 @endmacro
 
+@macro name=dialog_on
+@eval exp="tf.num = kag.numCharacterLayers-1"
+@move layer=message0 time=500 path=($+15,,255)
+@move layer=&tf.num time=300 opacity=255 path=($+40,,255)
+@wm
+@endmacro
+
+@macro name=dialog_off
+@eval exp="tf.num = kag.numCharacterLayers-1"
+@move layer=message0 time=500 path=($-15,,0)
+@move layer=&tf.num opacity=0 time=300 path=($-40,,0)
+@wm
+@endmacro
+
+@macro name=dialog
+@eval exp="tf.num = kag.numCharacterLayers-1"
+@if exp="mp.show"
+	@layopt layer=message0 visible=true
+	@layopt layer=&tf.num visible=true
+@else exp="mp.hide"
+	@layopt layer=message0 visible=false
+	@layopt layer=&tf.num visible=false
+@endif
+@endmacro
 ; --------------------------------------------------------
 ; SE
 ; --------------------------------------------------------
