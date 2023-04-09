@@ -30,6 +30,7 @@
 @endmacro
 
 @macro name = n
+@endindent
 @p
 @cm
 @hr
@@ -183,6 +184,7 @@
 *fg_in
 @macro name=%name
 	@fg	* name=&mp.tagname
+	@indent
 @endmacro
 
 @return
