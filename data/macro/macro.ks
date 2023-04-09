@@ -53,7 +53,7 @@
 @macro name=dialog_in
 @eval exp="tf.dialogOn = true"
 @eval exp="tf.num = kag.numCharacterLayers-1"
-@position layer=message0 opacity=0 top=540 left=420 visible=true
+@position layer=message0 opacity=0 top=540 left=420 width=480 marginl=0 margint=0 visible=true
 @image layer=&tf.num left=449 top=549 page=fore storage=frame visible=true opacity=0 scale=50
 @move layer=&tf.num path=(,,255,100) time=300 accel=-1
 @move layer=message0 path=(,,255) time=300 accel=-1
@@ -119,7 +119,7 @@
 ; --------------------------------------------------------
 
 @macro name=bg
-@image storage=%storage left=0 top=0 layer=0 visible=true mode=psmul
+@image storage=%storage left=0 top=0 layer=0 visible=true
 @endmacro
 
 ; --------------------------------------------------------

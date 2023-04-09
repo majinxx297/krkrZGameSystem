@@ -1,5 +1,7 @@
-﻿; Test new macros for basic scene
+﻿; 对话界面（虚构勇者）
 *start|
+@history output=true enabled=true
+@rclick enabled=true
 
 @bg storage=BG00
 @dialog_in
@@ -30,8 +32,5 @@
 
 @dialog_out
 
-@jump target=*start
-
-
-
+@jump storage="mainmenu.ks" target=*start
 
