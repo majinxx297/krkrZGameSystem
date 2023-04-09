@@ -41,10 +41,18 @@
 @current layer=message4
 我写我写我写写写[r]
 我写我写我写写写[l][r]
-@move layer=message4 time=70 path=(,@-60,)
+@move layer=message4 time=70 path=(,@-60,0)
+@wm
+@er
+@move layer=message4 time=1 path=(,@+60,255)
+@wm
 我写我写我写写写[r]
 我写我写我写写写[l][r]
 @move layer=message4 time=70 path=(,@-60,)
+@wm
+@er
+@move layer=message4 time=1 path=(,@+60,255)
+@wm
 我写我写我写写写[r]
 我写我写我写写写[l][r]
 @laycount messages=2
