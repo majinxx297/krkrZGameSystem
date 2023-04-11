@@ -58,6 +58,7 @@ Scenario B  暗黑宫篇             [endlink][r]
 
 ;停止动画和move
 @animstop layer=2 seg=1
+@eval exp="f.pausedMove = true"
 
 ;截图并清空文字
 @locksnapshot
@@ -74,6 +75,7 @@ Scenario B  暗黑宫篇             [endlink][r]
 @waitclick
 
 @freeimage layer="5" 
+@eval exp="f.pausedMove = false"
 @current layer="message0" 
 @er
 @unlocksnapshot

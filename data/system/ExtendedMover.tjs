@@ -288,7 +288,7 @@ class ExtendedMover
 
 	// コンティニュアスハンドラから呼び出されるメソッド
 	function move(tickCount)
-	{
+	{		
 		// 一時レイヤがある場合は拡大・縮小・回転処理します
 		if(refLayer !== void && refLayer isvalid)
 		{
@@ -648,6 +648,7 @@ class ExtendedMover
 class LinearMoverEx extends LinearMover, ExtendedMover
 {
 	var stopped = false; // レイヤの移動が既に停止しているか
+	var pausedTime = -1;
 
 	// コンストラクタ
 	function LinearMoverEx(layer, elm, finalfunction)
@@ -687,6 +688,16 @@ class LinearMoverEx extends LinearMover, ExtendedMover
 	// コンティニュアスハンドラ(LinearMover クラスの handler メソッドをオーバーライド)
 	function handler(tickCount)
 	{
+		if(kag.flags.pausedMove){
+			if(pausedTime == -1){pausedTime=tickCount;}
+			return;
+		}
+
+		if(pausedTime !== -1){
+			startTick+=(tickCount-pausedTime);
+			pausedTime = -1;
+		}
+
 		try
 		{
 			global.LinearMover.handler(...);
@@ -741,9 +752,11 @@ class SplineMoverEx extends SplineMover, ExtendedMover
 
 	function handler(tickCount)
 	{
+		if(kag.flags.pausedMove){return;}			
+
 		try
 		{
-			global.SplineMover.handler(...);
+			global.SplineMover.handler(...);			
 			if(nextStop && !stopped)
 			{
 				global.ExtendedMover.move(totalTime);
