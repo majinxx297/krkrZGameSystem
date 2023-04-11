@@ -1,6 +1,7 @@
 ; 开发用主选单
 
 *start|
+@startanchor 
 @history output=false enabled=false
 @rclick enabled=false
 @laycount layers=0 messages=0
@@ -13,9 +14,9 @@
 ; 显示脚本列表
 @current layer="message0" 
 @nowait
+[link storage="scratch.ks" target="*start"]Scratch(scratch.ks)[endlink][r]
 [link storage="testScene.ks" target="*start"]ADV基本对话界面(testScene.ks)[endlink][r]
 [link storage="scenarioSelect.ks" target="*start"]剧本选择画面(scenarioSelect.ks)[endlink][r]
-- Empty - [r]
 - Empty - [r]
 - Empty - [r]
 - Empty - [r]
