@@ -3,8 +3,8 @@
 *start|
 @history output=false enabled=false
 @rclick enabled=false
-@cm
-@eval exp="eraseAllLayers()"
+@laycount layers=0 messages=0
+@laycount layers=3 messages=2
 
 ; 主选单界面
 @image layer="base" storage="../bgimage/white.png" 

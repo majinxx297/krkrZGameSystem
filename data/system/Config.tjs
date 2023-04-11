@@ -286,7 +286,7 @@ function KAGWindow_config()
 // ◆ 初期状態のメッセージレイヤの数
 // 前景レイヤと違って、0 を指定することはできません。これも必要な数だけ確保
 // するようにすべきです。laycount タグでシナリオ内でも変更できます。
-;numMessageLayers = 2;
+;numMessageLayers = 3;
 
 
 // ◆ 初期状態でメッセージレイヤを表示するかどうか
@@ -505,10 +505,10 @@ function MessageLayer_config()
 // ◆ 初期位置
 // これらは、position タグのそれぞれ left top width height の属性に対応しま
 // す。
-;ml = 16;  // 左端位置
-;mt = 16;  // 上端位置
-;mw = 1280-32;   // 幅
-;mh = 720-32;   // 高さ
+;ml = 0;  // 左端位置
+;mt = 0;  // 上端位置
+;mw = 1280;   // 幅
+;mh = 720;   // 高さ
 
 
 // ◆ 自動改行/改ページ

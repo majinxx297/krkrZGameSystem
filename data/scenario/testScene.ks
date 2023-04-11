@@ -2,6 +2,8 @@
 *start|
 @history output=true enabled=true
 @rclick enabled=true
+@laycount layers=0 messages=0
+@laycount layers=4 messages=3
 
 @bg storage=BG00
 @dialog_in

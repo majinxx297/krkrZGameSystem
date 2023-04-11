@@ -26,5 +26,6 @@
 @copyone x=6171
 @copyone x=6732
 
+*resume1
 @wait time="&intrandom(2,8)*1000"
 @jump target = *loop1

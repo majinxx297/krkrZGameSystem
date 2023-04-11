@@ -3,25 +3,27 @@
 *start|
 @history output=false enabled=false
 @rclick enabled=true jump=true target=*start storage="mainmenu.ks"
+@laycount layers=0 messages=0
 
-; 1,2用来显示各Scenario特有的标题图
-; 0,3,4分别是背景、标题、和系统说明栏
-; message0显示剧本列表，message1显示说明文
-@laycount layers=5
-
-; 切换黑底
-@image storage="../bgimage/black.png" layer=base visible="true" 
+; base  | 背景
+; 0-1   | 各Scenario特有的标题图
+; 2     | 标题 
+; 3     | 下部说明栏
+; 4     | 选单底图
+; 5     | 暂停效果使用的截图
+; 6     | 确认选单底图
+@laycount layers=7 messages=3
 
 ; 进入动画
-@image storage="../others/bg.png" layer=0 visible="true" opacity=0
-@image storage="../others/Title.png" layer=3  left=1046 top=36 opacity=150 visible="true" 
-@animstart layer=3 seg=1 target="*start1"
-@position layer=message0 left=-444 top=129 page=fore visible="true" frame="../others/menu_frame.png" marginl="32" margint="28" marginr="32"
-@image storage="../others/msg_return.png" layer=4 left=100 top=667 opacity=0 visible="true" 
-@move layer=0 time=500 path=(,,255)
-@move layer=message0 time=100 delay=100 path=(72,129,255)
-@move layer=3 time=200 path=(74,36,255) accel=2
-@move layer=4 time=200 delay=300 path=(100,640,255)
+@image storage="../bgimage/bg.png" layer=base visible="true" opacity=0
+@image storage="../others/Title.png" layer=2  left=1046 top=36 opacity=150 visible="true" 
+@animstart layer=2 seg=1 target="*start1"
+@image layer=4 storage="../others/menu_frame.png"  left=-444 top=129 visible="true" opacity=150"
+@image storage="../others/msg_return.png" layer=3 left=100 top=667 opacity=0 visible="true" 
+@move layer=base time=500 path=(,,255)
+@move layer=4 time=100 delay=100 path=(72,129,255)
+@move layer=2 time=200 path=(74,36,255) accel=2
+@move layer=3 time=200 delay=300 path=(100,640,255)
 @wm
 
 ; 剧本选择菜单说明文字层设定
@@ -32,6 +34,7 @@
 @resetfont
 
 *scenario_list| 显示选项
+@position layer=message0 left=120 top=150 visible="true"
 @current layer="message0" 
 @deffont 
 @nowait
@@ -52,39 +55,27 @@ Scenario B  暗黑宫篇             [endlink][r]
 
 *confirm_dia| 确认画面
 @eval exp="dm(tf.scn)"
-;@animstop layer=3 seg=1
 
-;清空说明框并截图
-@current layer="message1" 
-@er 
+;停止动画和move
+@animstop layer=2 seg=1
+
+;截图并清空文字
 @locksnapshot
+@current layer="message1" 
+@cm
 
-;准备返回时的状态并写入back
-@stopmove
-@freeimage layer=1
-@freeimage layer=2
-@backlay
-
-;清空fore并读取截图
-@position layer="message0" visible="false" 
-@eval exp="eraseAllLayers()"
-@eval exp="kag.fore.layers[0].assignImages(kag.snapshotLayer)"
-@eval exp="kag.fore.layers[0].visible=true"
-@eval exp="kag.fore.layers[0].setSizeToImageSize()"
-@pimage layer=0 storage="../others/bg_dark.png"
+;读取截图
+@layopt layer="5" visible="true" top=0 left=0 
+@eval exp="kag.fore.layers[5].assignImages(kag.snapshotLayer)"
+@eval exp="kag.fore.layers[5].setSizeToImageSize()"
+@pimage layer=5 storage="../others/bg_dark.png"
 
 ; TODO: 显示确认窗口
 @waitclick
 
-@trans method=crossfade time=1
-@wt
-
-@unlocksnapshot
-;@animstart layer=3 seg=1 target="*resume1"
+@freeimage layer="5" 
 @current layer="message0" 
 @er
+@unlocksnapshot
+@animstart layer=2 seg=1 target="*resume1"
 @jump target="*scenario_list"
-
-
-;@jump target="*start" storage="mainmenu.ks" 
-
