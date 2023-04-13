@@ -93,7 +93,7 @@ function KAGWindow_config()
 // 設定は意味がありません。
 // 横幅はピクセル単位で指定してください。たて幅は scWidth と scHeight の
 // 比と同じ比で自動的に計算されます。
-;thumbnailWidth = 266;
+;thumbnailWidth = 128/640*scWidth;
 
 // ◆サムネイルの保存モード
 // サムネイルの保存モードを指定します。saveThumbnail を true に設定しないとこの
@@ -302,7 +302,7 @@ function KAGWindow_config()
 // メニューによる栞の管理を行わない場合 ( ゲーム画面中で全部栞の管理などを
 // 行う場合など ) は、numBookMarks は必要な数に設定し、restoreMenu.visible と
 // storeMenu.visible を false に設定してください。
-;numBookMarks = 10;
+;numBookMarks = 48;
 
 
 // ◆ 栞に日付を併記するか
@@ -418,11 +418,11 @@ function Menu_visible_config()
 
 
 // ◆ 「栞をたどる」
-;restoreMenu.visible = true;
+;restoreMenu.visible = false;
 
 
 // ◆ 「栞をはさむ」
-;storeMenu.visible = true;
+;storeMenu.visible = false;
 
 
 // ◆ 「画面」

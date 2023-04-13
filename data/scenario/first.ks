@@ -9,6 +9,7 @@
 @call storage=ExtHistoryLayer.ks
 @call storage=macro.ks
 @call storage=macro_game.ks
+@call storage=Krclick.ks
 @rclick storage="rclick.ks" target="*rclick" enable=true call=true
 
 @eval exp="Scripts.execStorage('common.tjs');"
