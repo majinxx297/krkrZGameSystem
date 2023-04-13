@@ -109,7 +109,9 @@ Workflow
 3. 粘回.ks文件
 
 ## 已完成
-
+<details>
+  <summary>显示</summary>
+  
 ### exmove插件加暂停
 - LinearMover和SplineMover暂停: 加一个isPaused，handler里检测这个=true就不动
 - evmove里如法炮制
@@ -188,3 +190,4 @@ fg motion
 ```
 @move 
 ```
+</details>
